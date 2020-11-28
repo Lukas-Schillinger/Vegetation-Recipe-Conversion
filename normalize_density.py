@@ -29,6 +29,11 @@ def update_densities():
 	names = ['ingredient', 'volume number', 'volume unit', 'mass number', 'mass unit']
 	md_dataframe = pd.read_csv(master_densities, names = names)
 
+	'''
+	Doing mass and volume like this right now because in the future
+	it needs to handle units pints doesn't recognize like
+	grams in a head of cauliflower or grams in an inch of ginger
+	'''
 	normalized_dict = {
 		'ingredient'      : md_dataframe['ingredient'],
 		'combined_volume' : md_dataframe.apply(combine_volume, axis = 1),
