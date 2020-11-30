@@ -3,11 +3,13 @@ from pint import UnitRegistry
 import pandas as pd
 import numpy as np
 
+#Sets up more convenient unit conversion
 ureg = UnitRegistry()
 
 def choose_week():
 	week_folder = os.listdir('master_recipes')
 	
+	#Display weeks in a user-friendly format
 	count = 0
 	numbered_weeks = []
 	
@@ -70,9 +72,6 @@ def get_metadata_dicts():
 	return metadata_dict
 
 def try_metric(recipe):
-	#fields = ['number_unit', 'ingredient', 'notes']
-	#numberunit_frame = pd.DataFrame(columns = fields)
-
 	'''
 	Hopefully there'll never be a situation where key
 	order changes
@@ -89,6 +88,8 @@ def try_metric(recipe):
 '''
 writing these out as independent functions may not have been completely
 necessary but it makes conversion_machine a little less disgusting
+
+These actually don't even really work
 '''
 ########################################################################
 
@@ -274,12 +275,20 @@ def  write_to_csv(dataframe, recipe_dict, desired_servings):
 
 
 def main():
-	#Updata densities before running
+
+	'''
+	Updates densities before running; densities are calculated 
+	from master_densities.csv by normalize_densities.py and stored
+	in normalized_densities. main.py uses these densities with try_mass()
+	'''
 	normalize_density.update_densities()
 
 	metadata_dict = get_metadata_dicts()
 
+	#Stores the missing densities collected by find_missing_densities()
 	missing_densities = []
+
+	#Runs through every recipe going to be used in a given week
 	for recipe in metadata_dict:
 		'''
 		Not necessary to give these separate variables but it makes
@@ -318,7 +327,16 @@ def main():
 
 		write_to_csv(mass_frame, metadata_dict[recipe], desired_servings)
 
-	print ('\n', set(missing_densities))
+		print ('%s normalized and saved to:' % (metadata_dict[recipe]['name']))
+		print ([metadata_dict[recipe]['filepath']])
+
+	print ('The following ingredients could have been converted')
+	print ('to mass but no density has been recorded for them')
+	print ('in master_densities.py\n')
+
+	print (set(missing_densities))
+
+	print ('Finished!')
 
 
 if __name__ == '__main__':
