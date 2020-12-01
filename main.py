@@ -32,6 +32,56 @@ def choose_week():
 	week_name = chosen_week_path.split('/')[1]
 	return chosen_week_path, week_name
 
+def choose_all_or_one(metadata_dict):
+	print ('press [a] to normalize all recipes')
+	print ('press [o] to normalize one recipe')
+
+	while True:
+		try:
+			all_or_one_selection = str(input('>'))
+			if all_or_one_selection == 'a' or all_or_one_selection == 'o':
+				break
+			else:
+				print ('invalid selection')
+		except (IndexError, ValueError) as e:
+			print (e, '\n')
+
+	if all_or_one_selection == 'a':
+		return metadata_dict
+
+	if all_or_one_selection == 'o':
+		count = 0
+		listed_recipes = []
+		for recipe in metadata_dict:
+			print  ('[' + str(count) + ']' + ' ' + recipe)
+			listed_recipes.append(recipe)
+			count += 1
+
+		print ('choose recipe to normalize')
+		while True:
+			try:
+				recipe_selection = listed_recipes[int(input('>'))]
+				break
+			except (IndexError, ValueError) as e:
+				print (e)
+
+		'''
+		I need to create a new dictionary object for a sinlge
+		selection because recipes in the dict are accessed
+		later on by their key. metadata_dict[recipe_selection]
+		doesn't yield include the key so a new dictionary needs
+		to be passed to get_metadata_dicts()
+		'''
+		recipe_selection_dict = {
+			recipe_selection :
+				metadata_dict[recipe_selection]
+		}
+
+		return recipe_selection_dict
+
+	else:
+		print ('ERROR ERROR ERROR YOU SHOULDNT SEE THIS')
+
 def get_metadata_dicts():
 	chosen_week_path, week_name = choose_week()
 	recipe_file_names = os.listdir(chosen_week_path)
@@ -69,6 +119,8 @@ def get_metadata_dicts():
 			}    
 		metadata_dict.update(metadata_entry)
 	
+	metadata_dict = choose_all_or_one(metadata_dict)
+
 	return metadata_dict
 
 def try_metric(recipe):
@@ -295,10 +347,10 @@ def main():
 		things easier to read
 		'''
 		recipe_filepath = metadata_dict[recipe]['filepath']
-		recipe_servings = int(metadata_dict[recipe]['servings'])
+		recipe_servings = float(metadata_dict[recipe]['servings'])
 		recipe_notes = metadata_dict[recipe]['notes']
 
-		desired_servings = int(input(metadata_dict[recipe]['name'] + ': How many servings?\n >'))
+		desired_servings = float(input(metadata_dict[recipe]['name'] + ': How many servings?\n >'))
 
 		recipe_dataframe = pd.read_csv(recipe_filepath, header = 2)
 
@@ -328,9 +380,9 @@ def main():
 		write_to_csv(mass_frame, metadata_dict[recipe], desired_servings)
 
 		print ('%s normalized and saved to:' % (metadata_dict[recipe]['name']))
-		print ([metadata_dict[recipe]['filepath']])
+		print ([metadata_dict[recipe]['filepath']], '\n')
 
-	print ('The following ingredients could have been converted')
+	print ('\nThe following ingredients could have been converted')
 	print ('to mass but no density has been recorded for them')
 	print ('in master_densities.py\n')
 
