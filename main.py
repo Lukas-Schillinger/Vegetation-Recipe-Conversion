@@ -390,8 +390,6 @@ def main():
 
 	print ('Finished!')
 
-
 if __name__ == '__main__':
 	main()
-
-time.sleep(9999)
+	time.sleep(9999)
