@@ -375,6 +375,52 @@ def find_missing_densities(df, missing_den):
 
 	return y
 
+def make_printable(df):
+	
+	if df['ingredient'] == np.nan or df['ingredient'] == 'nan':
+		df['pretty'] = np.nan
+		
+	if pd.isnull(df['pint_raw']):
+		print (df['pint_raw'])
+		df['pretty'] = str(df['number']) + ' ' + str(df['raw_unit'])
+		
+	else:
+		
+		if pd.notnull(df['pint_mass']):
+			df['pretty'] = df['pint_mass']
+			
+		else:
+			df['pretty'] = df['pint_volume']
+			
+	return df
+
+def get_printable(df):
+	x = df.apply(make_printable, axis = 1)
+	x.rename(columns = {'pretty' : 'number', 'number' : 'old_number'})
+
+	return x[['ingredient', 'number', 'notes']]
+
+def  write_to_csv(df, recipe_dict):
+	pretty_recipe = get_printable(df)
+	desired_servings = recipe_dict['desired_servings']
+
+	save_location = (
+					'normalized_recipes/' + \
+					recipe_dict['week_name'] + \
+					'/' + \
+					recipe_dict['name'] + \
+					' (normalized)' + \
+					'.csv' \
+				)
+
+	with open(save_location, mode = 'w') as recipe_loc:
+		recipe_writer = csv.writer(recipe_loc, lineterminator = '\n')
+
+		recipe_writer.writerow([recipe_dict['name']])
+		recipe_writer.writerow([desired_servings, \
+								recipe_dict['notes']])
+
+	pretty_recipe.to_csv(save_location, index = False, mode = 'a')
 
 def main():
 
@@ -410,6 +456,8 @@ def main():
 		round_everything(df)
 
 		print (df)
+
+		write_to_csv(df, metadata_dict[recipe])
 
 	print (missing_den)
 

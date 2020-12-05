@@ -1,17 +1,17 @@
 Cheesy Vegan Cauliflower Casserole
-30.0,
-number_unit,ingredient,notes
-15.0 head,cauliflower,cut into bite sized florets
-420.0 gram,panko gluten free,
-221.8 milliliter,butter,melted
+40.0,
+ingredient,number,notes
+cauliflower,20.0,cut into bite sized florets
+panko gluten free,10.0,
+butter,20.0,melted
 ,,
-1774.4 milliliter,raw cashew,soaked
-7350.0 gram,soy milk,
-3450.0 gram,vegetable broth,
-825.0 gram,lemon juice,
-240.0 gram,tapioca flour,
-262.5 gram,nutritional yeast,
-600.0 gram,dijon mustard,
-73.9 milliliter,garlic powder,
-47.5 gram,onion powder,
-1.9 teaspoon,salt,
+raw cashew,10.0,soaked
+soy milk,9800.0,
+vegetable broth,4600.0,
+lemon juice,1100.0,
+tapioca flour,320.0,
+nutritional yeast,350.0,
+dijon mustard,800.0,
+garlic powder,20.0,
+onion powder,20.0,
+salt,2.5,
