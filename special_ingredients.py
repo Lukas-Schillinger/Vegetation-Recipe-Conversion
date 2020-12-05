@@ -295,27 +295,6 @@ def convert_to_metric(df):
 	df['pint_volume'] = volume_list	
 	df['pint_mass'] = mass_list
 
-def little_units(df):
-	volume_list = []
-
-	for index, row in df.iterrows():
-		volume = row['pint_volume']
-
-		try:
-
-			if row['pint_volume'].magnitude <= 60:
-				volume = volume.to(ureg.tbsp)
-
-			if row['pint_volume'].magnitude <= 20:
-				volume = volume.to(ureg.tsp)
-
-		except AttributeError:
-			pass
-
-		volume_list.append(volume)
-
-	df['pint_volume'] = volume_list
-
 def round_everything(df):
 	volume_list = []
 	mass_list = []
@@ -375,13 +354,65 @@ def find_missing_densities(df, missing_den):
 
 	return y
 
+def little_units(number):
+	proc_dict = {
+		'original'     : number,
+		'processed_ml' : 0 * ureg.ml,     # empty numbers given pint
+		'ml'           : 0 * ureg.ml,     # conversions so .magnitude
+		'cup'          : 0 * ureg.cup,    # can be checked later
+		'little'       : 0 * ureg.tbsp
+	}
+	if number.magnitude > 60:
+		
+		ml = ((number.magnitude // 1000) * 1000) * (ureg.ml)
+		ml = ml.to(ureg.l) # Only include if ml cutoff == 1L
+		ml_rem = (number.magnitude % 1000)
+		proc_dict['ml'] = ml
+		
+		cup = ((((ml_rem * ureg.ml).to(ureg.cup)).magnitude // .25) \
+				 / 4) * ureg.cup
+		cup_rem = (((ml_rem * ureg.ml).to(ureg.cup)).magnitude % .25)
+		proc_dict['cup'] = cup
+		
+		little = ((cup_rem * ureg.cup).to(ureg.tbsp))
+		
+		if little.magnitude < 1:
+			little = little.to(ureg.tsp)
+		else:
+			pass
+		
+		proc_dict['little'] = round(little, 1)
+
+		proc_dict['processed_ml'] = round((ml + cup + little), 1)
+	
+	else:
+		if number.magnitude <= 60:
+			little = number.to(ureg.tbsp)
+			proc_dict['little'] = round(little, 1)
+
+		if number.magnitude < 30:
+			little = number.to(ureg.tsp)
+			proc_dict['little'] = round(little, 1)
+			
+	pretty_list = []
+	for value in proc_dict.values():
+		if value.magnitude == 0:
+			pass
+		else:
+			pretty_list.append(str(value))
+			
+	del pretty_list[0:2]
+	
+	pretty_string = ' '.join([str(elem) for elem in pretty_list])
+	
+	return pretty_string
+
 def make_printable(df):
 	
 	if df['ingredient'] == np.nan or df['ingredient'] == 'nan':
 		df['pretty'] = np.nan
 		
 	if pd.isnull(df['pint_raw']):
-		print (df['pint_raw'])
 		df['pretty'] = str(df['number']) + ' ' + str(df['raw_unit'])
 		
 	else:
@@ -390,18 +421,21 @@ def make_printable(df):
 			df['pretty'] = df['pint_mass']
 			
 		else:
-			df['pretty'] = df['pint_volume']
+			x = little_units(df['pint_volume'])
+			df['pretty'] = x
 			
 	return df
 
 def get_printable(df):
 	x = df.apply(make_printable, axis = 1)
-	x.rename(columns = {'pretty' : 'number', 'number' : 'old_number'})
+	x = x.rename(columns = {'pretty' : 'number', \
+							'number' : 'old_number'})
 
 	return x[['ingredient', 'number', 'notes']]
 
 def  write_to_csv(df, recipe_dict):
 	pretty_recipe = get_printable(df)
+
 	desired_servings = recipe_dict['desired_servings']
 
 	save_location = (
@@ -450,8 +484,6 @@ def main():
 		missing_den = find_missing_densities(df, missing_den)
 
 		convert_to_metric(df)
-
-		little_units(df)
 
 		round_everything(df)
 

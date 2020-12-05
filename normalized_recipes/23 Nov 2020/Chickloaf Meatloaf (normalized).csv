@@ -1,18 +1,18 @@
 Chickloaf Meatloaf
-30.0,
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
-750.0,gram,onion,chopped,750.0 gram,,750.0 gram
-750.0,gram,celery,chopped,750.0 gram,,750.0 gram
-750.0,gram,carrot,chopped,750.0 gram,,750.0 gram
-22.5,clove,garlic,,,,
-15.0,can,chickpea,"drained, rinsed",,,
-900.0,gram,panko,,900.0 gram,,900.0 gram
-15.0,tbsp,flaxseed,,15.0 tablespoon,221.8 milliliter,
-22.5,tbsp,nutritional yeast,,22.5 tablespoon,332.7 milliliter,84.4 gram
-15.0,tbsp,tamari,,15.0 tablespoon,221.8 milliliter,239.5 gram
-15.0,tbsp,worcestershire sauce,,15.0 tablespoon,221.8 milliliter,
-1.9,cup,ketchup,,1.875 cup,443.6 milliliter,510.0 gram
-3.8,tsp,liquid smoke,,3.75 teaspoon,3.8 teaspoon,16.9 gram
-,,,,,,
-5.0,cup,ketchup,,4.95 cup,1171.1 milliliter,1346.4 gram
-15.0,tsp,worcestire sauce,,15.0 teaspoon,73.9 milliliter,
+11.0,
+ingredient,number,notes
+onion,275.0 gram,chopped
+celery,275.0 gram,chopped
+carrot,275.0 gram,chopped
+garlic,8.2 clove,
+chickpea,5.5 can,"drained, rinsed"
+panko,330.0 gram,
+flaxseed,0.25 cup 1.5 tablespoon,
+nutritional yeast,30.9 gram,
+tamari,87.8 gram,
+worcestershire sauce,0.25 cup 1.5 tablespoon,
+ketchup,187.0 gram,
+liquid smoke,6.2 gram,
+,nan nan,
+ketchup,493.7 gram,
+worcestire sauce,,

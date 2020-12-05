@@ -1,25 +1,25 @@
 Vegan Bolognase Sauce
-40,
-number_unit,ingredient,notes
-18927.1 milliliter,riced cauliflower,
-9463.5 milliliter,diced mushroom,
-1200.0 gram,walnut,superfinely chopped
-1439.9 gram,tamari,
-120.0 gram,italian seasoning,
-394.3 milliliter,paprika,
-18927.1 milliliter,onion,finely diced
-2126.7 gram,celery,finely diced
-2920.0 gram,carrot,shredded
-880.0 gram,garlic,minced
-9463.5 milliliter,red wine,
-31751.5 gram,canned tomato,
-6803.9 gram,tomato paste,
-8320.0 gram,soy milk,
-320.0 gram,basil,
-120.0 gram,oregano,
-197.2 milliliter,sage,
-49.3 milliliter,salt,
-23.3 gram,pepper,
-23.3 gram,red pepper flakes,
-23.3 gram,nutmeg,
-300.0 gram,nutritional yeast,
+40.0,
+ingredient,number,notes
+riced cauliflower,80.0,
+diced mushroom,40.0,
+walnut,10.0,superfinely chopped
+tamari,80.0,
+italian seasoning,40.0,
+paprika,80.0,
+onion,80.0,finely diced
+celery,2126.7,finely diced
+carrot,2920.0,shredded
+garlic,880.0,minced
+red wine,40.0,
+canned tomato,1120.0,
+tomato paste,240.0,
+soy milk,40.0,
+basil,10.0,
+oregano,40.0,
+sage,40.0,
+salt,10.0,
+pepper,10.0,
+red pepper flakes,10.0,
+nutmeg,10.0,
+nutritional yeast,80.0,

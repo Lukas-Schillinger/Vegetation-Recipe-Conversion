@@ -1,10 +1,10 @@
 Quick Pickled Onions
-40,
-number_unit,ingredient,notes
-40.0 whole,onion,very thinly sliced
-4731.8 milliliter,water,
-150.0 gram,white vinegar,
-2886.4 gram,apple cider vinegar,
-1215.5 gram,maple syrup,
-295.7 milliliter,salt,
-23.3 gram,red pepper flakes,
+100.0,
+ingredient,number,notes
+onion,100.0,very thinly sliced
+water,50.0,
+white vinegar,25.0,
+apple cider vinegar,25.0,
+maple syrup,150.0,
+salt,150.0,
+red pepper flakes,25.0,
