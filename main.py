@@ -65,13 +65,12 @@ def choose_all_or_one(metadata_dict):
 			except (IndexError, ValueError) as e:
 				print (e)
 
-		'''
-		I need to create a new dictionary object for a sinlge
-		selection because recipes in the dict are accessed
-		later on by their key. metadata_dict[recipe_selection]
-		doesn't yield include the key so a new dictionary needs
-		to be passed to get_metadata_dicts()
-		'''
+		# I need to create a new dictionary object for a sinlge
+		# selection because recipes in the dict are accessed
+		# later on by their key. metadata_dict[recipe_selection]
+		# doesn't yield include the key so a new dictionary needs
+		# to be passed to get_metadata_dicts()
+
 		recipe_selection_dict = {
 			recipe_selection :
 				metadata_dict[recipe_selection]
@@ -90,14 +89,14 @@ def get_metadata_dicts():
 	for recipe in recipe_file_names:
 		path = chosen_week_path + '/' + recipe
 		recipe_paths.append(path)
-	'''
-	I'm using a dict here to pass information instead of directly
-	assigning in case more information needs to be passed on 
-	later like cooking instructions etc. 
 
-	Pandas can't really handle csv data outside of a dataframe or
-	series so this information is parsed separately 
-	'''
+	# I'm using a dict here to pass information instead of directly
+	# assigning in case more information needs to be passed on 
+	# later like cooking instructions etc. 
+
+	# Pandas can't really handle csv data outside of a dataframe or
+	# series so this information is parsed separately 
+
 	metadata_dict = {}
 	for path in recipe_paths:
 		with open(path) as recipe_csv:
@@ -110,11 +109,12 @@ def get_metadata_dicts():
 			
 			metadata_entry = {
 				name : {
-					'name'      : name,
-					'week_name' : week_name,
-					'filepath'  : path,
-					'servings'  : servings,
-					'notes'     : notes
+					'name'             : name,
+					'week_name'        : week_name,
+					'filepath'         : path,
+					'servings'         : servings,
+					'notes'            : notes,
+					'desired_servings' : None
 				}
 			}    
 		metadata_dict.update(metadata_entry)
