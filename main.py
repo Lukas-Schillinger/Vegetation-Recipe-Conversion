@@ -1,15 +1,17 @@
-import time, csv, os, normalize_density
+import time, warnings, os, csv, normalize_density
 from pint import UnitRegistry
-import pandas as pd
+import pandas as pd 
 import numpy as np
 
-#Sets up more convenient unit conversion
+warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
+test_mode = True # skips selections to quickly fire through recipes
 
 def choose_week():
+	global test_mode #                                        TEST CHECK
+
 	week_folder = os.listdir('master_recipes')
 	
-	#Display weeks in a user-friendly format
 	count = 0
 	numbered_weeks = []
 	
@@ -21,7 +23,9 @@ def choose_week():
 	print (*numbered_weeks, sep = '\n')
 	print ('input number week')
 	
-	while True:
+	week_selection = week_folder[0] #                         TEST CHECK
+
+	while test_mode == False: #                               TEST CHECK
 		try:
 			week_selection = week_folder[int(input('>'))]
 			break
@@ -33,13 +37,18 @@ def choose_week():
 	return chosen_week_path, week_name
 
 def choose_all_or_one(metadata_dict):
+	global test_mode #                                        TEST CHECK
+
 	print ('press [a] to normalize all recipes')
 	print ('press [o] to normalize one recipe')
 
-	while True:
+	all_or_one_selection = 'a' #                              TEST CHECK
+
+	while test_mode == False: #                               TEST CHECK
 		try:
 			all_or_one_selection = str(input('>'))
-			if all_or_one_selection == 'a' or all_or_one_selection == 'o':
+			selections = ('a', 'o')
+			if all_or_one_selection in selections:
 				break
 			else:
 				print ('invalid selection')
@@ -68,7 +77,7 @@ def choose_all_or_one(metadata_dict):
 		# I need to create a new dictionary object for a sinlge
 		# selection because recipes in the dict are accessed
 		# later on by their key. metadata_dict[recipe_selection]
-		# doesn't yield include the key so a new dictionary needs
+		# doesn't include the key so a new dictionary needs
 		# to be passed to get_metadata_dicts()
 
 		recipe_selection_dict = {
@@ -123,272 +132,413 @@ def get_metadata_dicts():
 
 	return metadata_dict
 
-def try_metric(recipe):
-	'''
-	Hopefully there'll never be a situation where key
-	order changes
-	'''
-	numberunit_dict = {
-		'number_unit' : recipe.apply(conversion_machine, axis = 1),
-		'ingredient'  : recipe['ingredient'],
-		'notes'       : recipe['notes']
-	}
-	
-	numberunit_recipe = pd.concat(numberunit_dict, axis = 1)
-	return (numberunit_recipe)   
 
-'''
-writing these out as independent functions may not have been completely
-necessary but it makes conversion_machine a little less disgusting
+def try_pint(df):
 
-These actually don't even really work
-'''
-########################################################################
+	# fills in the [pint_raw] column
+	# simpler to just get a pint object and then decide where
+	# it goes than fill in [volume] and [mass] in one mega function
 
-def redefine_to_compatible(cell, message = None):
-	print (message)
-	return input('>')
-
-def does_it_exist(cell):
-	if cell == '':
-		message = ("something that was supposed to be here was not")
-		cell = redefine_to_compatible(cell, message)
-		does_it_exist(cell)
-	else:
-		return cell
-
-def is_it_a_string(cell):
-	try:
-		cell = str(cell)
-		return cell
-	except:
-		message = ('could not convert %s to a string' % cell)
-		cell = redefine_to_compatible(cell, message)
-		is_it_a_string(cell)
-
-def is_it_a_float(cell):
-	try:
-		cell = float(cell)
-		return cell
-	except:
-		message = ('could not convert %s to a float' % cell)
-		cell = redefine_to_compatible(cell, message)
-		is_it_a_float(cell)
-
-########################################################################
-
-def conversion_machine(row):
-	number = row['number']
-	unit = row['unit']
-
-	number = does_it_exist(number)
-	unit = does_it_exist(unit)
-
-	number = is_it_a_float(number)
-	unit = is_it_a_string(unit)
-
-	'''
-	Mandatory fix of tablespoon abbreviation, could be
-	improved by checking from a dictionart of abbreviation
-	mistakes
-	'''
-	if unit == 'tbs':
-		unit = 'tbsp'
-
-	if unit == 'tsp':
-		numberunit = number * ureg(unit)
-		'''
-		If number <= 3 keep it in tsp
-		If number > 3 convert it to tbsp
-		If tbsp conversion is greater than
-		3 convert it to grams
-		'''
-		if number <= 3:
-			pass
-		else:
-			numberunit = numberunit.to(ureg.tbsp)
-			if numberunit.magnitude > 3:
-				numberunit = numberunit.to(ureg.ml)
-			else:
-				pass
-	else:
+	pint_list = []
+	for i in range(len(df)):
+		x = df.loc[i]
+		unit = x['raw_unit']
+		number = x['number']
+		
 		try:
-			'''
-			This block executes if the unit is in
-			the pint library
-			'''
-			numberunit = number * ureg(unit)
+			pint_raw = number * ureg(unit)
+		except AttributeError:
+			pint_raw = np.nan
+		
+		pint_list.append(pint_raw)
+
+	df['pint_raw'] = pint_list
+
+def try_volume(df): # fill in the [volume] column
+	volume_list = []
+	for i in range(len(df)):
+		x = df.loc[i]
+
+		try:
+			if x['pint_raw'].dimensionality == '[length] ** 3':
+				pint_volume = (x['pint_raw'])
+			else:
+				pint_volume = np.nan
 
 		except AttributeError:
-			'''
-			Shitty string workaround. This happens if 
-			the unit isn't recognized by pint.
-			this is the only condition that skips
-			the rounding step.
+			pint_volume = np.nan
 
-			not a good fix!
-			'''
-			if pd.isnull(row['ingredient']):
-				return np.nan
+		volume_list.append(pint_volume)
+
+	df['pint_volume'] = volume_list
+
+def try_mass(df): # fill in the [mass] column
+	mass_list = []
+	for i in range(len(df)):
+		x = df.loc[i]
+
+		try:
+			if x['pint_raw'].dimensionality == '[mass]':
+				pint_mass = x['pint_raw']
 			else:
-				round_workaround = round(number, 1)
-				round_workaround = str(str(round_workaround) + ' ' + str(unit))
-				return round_workaround
+				pint_mass = np.nan
 
-		#If unit is a measure of volume
-		if numberunit.dimensionality == ('[length] ** 3'):
-			numberunit = numberunit.to(ureg.ml)
+		except AttributeError:
+			pint_mass = np.nan
 
-		#If unit is a measure of weight
-		if numberunit.dimensionality == ('[mass]'):
-			numberunit = numberunit.to(ureg.gram)
+		mass_list.append(pint_mass)
 
-		'''
-		For some reason this else block always runs, I have no idea why
-		>:(
-		
+	df['pint_mass'] = mass_list
+
+def volume_to_mass(df):
+
+	# this needs to be redone with the same DataFrame.loc method used
+	# in apply_weird_unit()
+
+	density_frame = pd.read_csv('normalized_densities.csv')
+
+	mass_list = []
+	for i in range(len(df)):
+		ready_for_conversion = False
+		x = df.loc[i]
+
+		if pd.isnull(x['pint_mass']) and pd.notnull(x['pint_volume']):
+			pint_mass = x['pint_mass']
+			ready_for_conversion = True
+
 		else:
-			print ('')
-			print ('if you see this it means the unit wasn't mass or volume
-			print (row['ingredient'], numberunit, numberunit.dimensionality)
-			print ('')
-		'''
+			pint_mass = x['pint_mass']
 
-	round_number = round(numberunit.magnitude, 1)
-	final_unit = str(numberunit.units)
-	numberunit = round_number * ureg(final_unit)
-	return numberunit
+		if ready_for_conversion == True:
+			for i in range(len(density_frame)):
+				y = density_frame.loc[i]
 
-def convert_from_volume_to_mass(recipe_row):
-	densities_list = pd.read_csv('normalized_densities.csv')
+				if y['ingredient'] == x['ingredient']:
 
-	for index, density_row in densities_list.iterrows():
+					density = ureg(y['density'])
+					pint_mass = density * x['pint_volume']
 
-		if density_row['ingredient'] == recipe_row['ingredient']:
-			if recipe_row['number_unit'].units == 'milliliter':
+		mass_list.append(pint_mass)
 
-				recipe_number_unit = recipe_row['number_unit']
-				density = float(density_row['density'].split(' ')[0])
-				recipe_number = round((recipe_number_unit.magnitude * density), 1)
-				recipe_number_unit = recipe_number * ureg.gram
-				recipe_row['number_unit'] = recipe_number_unit
+	df['pint_mass'] = mass_list
 
-	return recipe_row['number_unit']
+def mass_to_volume(df):
 
-def try_mass(numberunit_dataframe):
+	# this needs to be redone with the same DataFrame.loc method used
+	# in apply_weird_unit()
 
-	number_unit = numberunit_dataframe.apply(convert_from_volume_to_mass, axis = 1)
+	density_frame = pd.read_csv('normalized_densities.csv')
 
-	weighed_dict = {
-		'number_unit' : number_unit,
-		'ingredient'  : numberunit_dataframe['ingredient'],
-		'notes'       : numberunit_dataframe['notes']
-	}
+	volume_list = []
+	for i in range(len(df)):
+		ready_for_conversion = False
+		x = df.loc[i]
+
+		if pd.isnull(x['pint_volume']) and pd.notnull(x['pint_mass']):
+			pint_volume = x['pint_volume']
+			ready_for_conversion = True
+
+		else:
+			pint_volume = x['pint_volume']
+
+		if ready_for_conversion == True:
+			for i in range(len(density_frame)):
+				y = density_frame.loc[i]
+
+				if y['ingredient'] == x['ingredient']:
+
+					density = ureg(y['density'])
+					pint_volume = (1 / density) * x['pint_mass']
+
+		volume_list.append(pint_volume)
+
+	df['pint_volume'] = volume_list
+
+def apply_weird_unit(df):
+
+	# fills in mass or volume for units not given in pint recognizeable
+	# units like head of cauliflower or can of beans.
+	# this function is called by check_weird_unit()
+
+	weird_frame = pd.read_csv('weird_units.csv')
+
+	ingredient = df['ingredient']
+	unit = df['raw_unit']
+	number = df['number']
+
+	x = weird_frame.loc[
+		(weird_frame['ingredient'] == ingredient) &
+		(weird_frame['s_unit'] == unit)
+	]
+
+	if len(x) > 1:
+		print ('multiple matches for', ingredient, 'found')
+		print ("that's not supposed to happen, going with")
+		print ('the first one')
+		print (x)
+
+	if len(x) > 0:
+
+		matched_mass = x.iloc[0]['mass']
+		matched_volume = x.iloc[0]['volume']
+
+		recipe_mass = number * ureg(matched_mass)
+		recipe_volume = number * ureg(matched_volume)
+
+		df['pint_volume'] = recipe_volume
+		df['pint_mass'] = recipe_mass
+
+		return df
+
+def check_weird_unit(df):
+	weird_frame = pd.read_csv('weird_units.csv')
+
+	unconverted = df[df['pint_raw'].isnull()]
+
+	x = unconverted.apply(apply_weird_unit, axis = 1)
 	
-	weighed_recipe = pd.concat(weighed_dict, axis = 1)
-	return (weighed_recipe) 
+	df.fillna(x, inplace = True)
 
-def find_missing_densities(DataFrame):
-	local_missing_densities = []
-	for index, row in DataFrame.iterrows():
+def convert_to_metric(df):
 
-		if isinstance(row['number_unit'], str) or pd.isnull(row['number_unit']):
-			#Catching the ingredients using shitty workaround
+	# this function reassigns the entire row because iterrows()
+	# creates a copy of the row and it was easier to do this
+	# than assign each conversion by index. 
+
+	volume_list = []
+	mass_list = []
+
+	for index, row in df.iterrows():
+		if pd.notnull(row['pint_volume']):
+			ml_volume = row['pint_volume'].to(ureg.ml)
+			volume_list.append(ml_volume)
+		else:
+			ml_volume = np.nan
+			volume_list.append(ml_volume)
+
+		if pd.notnull(row['pint_mass']):
+			g_mass = row['pint_mass'].to(ureg.gram)
+			mass_list.append(g_mass)
+		else:
+			g_mass = np.nan
+			mass_list.append(g_mass)
+
+	df['pint_volume'] = volume_list	
+	df['pint_mass'] = mass_list
+
+def round_everything(df):
+
+	# these units will eventually be copied into the final frame
+	# so they need to be a little more human-readable.
+	# volume omitted because it's handled differently
+	# by make_printable()
+
+	mass_list = []
+	number_list = []
+
+	for index, row in df.iterrows():
+		round_mass = round(row['pint_mass'], 1)
+		round_number = round(row['number'], 1)
+
+		mass_list.append(round_mass)
+		number_list.append(round_number)
+
+	df['pint_mass'] = mass_list
+	df['number'] = number_list
+
+def set_recipe_to_servings(df, recipe_dict):
+	global test_mode #                                        TEST CHECK
+	servings = recipe_dict['servings']
+	name = recipe_dict['name']
+
+	print (name, '\nHow many servings?')
+
+	desired_servings = 40 #                                   TEST CHECK
+
+	while test_mode == False: #                               TEST CHECK
+		try:
+			desired_servings = float(input('>'))
+			recipe_dict['desired_servings'] = desired_servings
+			break
+		except:
+			print ('invalid input')
+
+	multiple = desired_servings * (1 / int(servings))
+	df['number'] = df['number'] * multiple
+
+def get_recipe_df(filepath):
+	df = pd.read_csv(filepath, header = 2)
+	df = df.rename(columns = {'unit' : 'raw_unit'})
+
+	df['pint_raw'] = np.nan
+	df['pint_volume'] = np.nan
+	df['pint_mass'] = np.nan
+
+	return df
+
+def fix_units(df):
+	df['raw_unit'] = df['raw_unit'].replace('tbs', 'tbsp')
+
+def find_missing_densities(df, missing_den):
+	x = df.loc[
+			(pd.isnull(df['pint_mass'])) &
+			(pd.notnull(df['pint_volume']))
+		]
+
+	x = x['ingredient']
+
+	y = pd.concat([missing_den, x]).drop_duplicates()
+
+	return y
+
+def little_units(number):
+
+	# this function uses a dictionary and records an 'original' and 
+	# a 'processed_ml' so that if something is tweaked it can be 
+	# quickly thrown into a df and checked
+
+	proc_dict = {
+		'original'     : number,
+		'processed_ml' : 0 * ureg.ml,     # empty numbers given pint
+		'ml'           : 0 * ureg.ml,     # conversions so .magnitude
+		'cup'          : 0 * ureg.cup,    # can be checked later
+		'little'       : 0 * ureg.tbsp
+	}
+	if number.magnitude > 60:
+
+		# using fewer lines makes the program run faster, 
+		# thats why everything is so jammed together here
+		
+		ml = ((number.magnitude // 1000) * 1000) * (ureg.ml)
+		ml = ml.to(ureg.l)
+		ml_rem = (number.magnitude % 1000)
+		proc_dict['ml'] = ml
+		
+		cup = ((((ml_rem * ureg.ml).to(ureg.cup)).magnitude // .25) \
+				 / 4) * ureg.cup
+		cup_rem = (((ml_rem * ureg.ml).to(ureg.cup)).magnitude % .25)
+		proc_dict['cup'] = cup
+		
+		little = ((cup_rem * ureg.cup).to(ureg.tbsp))
+		
+		if little.magnitude < 1:
+			little = little.to(ureg.tsp)
+		else:
+			pass
+		
+		proc_dict['little'] = round(little, 1)
+
+		proc_dict['processed_ml'] = round((ml + cup + little), 1)
+	
+	else:
+		if number.magnitude <= 60:
+			little = number.to(ureg.tbsp)
+			proc_dict['little'] = round(little, 1)
+
+		if number.magnitude < 30:
+			little = number.to(ureg.tsp)
+			proc_dict['little'] = round(little, 1)
+			
+	pretty_list = []
+	for value in proc_dict.values():
+		if value.magnitude == 0:
 			pass
 		else:
-			'''
-			This won't catch units too small to have been recorded
-			but they were probably in units too small to have mattered
-			'''
-			if row['number_unit'].units == 'milliliter':
-				#idk  there were nan units getting through
-				if row['ingredient'] == 'nan':
-					pass
-				else:
-					local_missing_densities.append(row['ingredient'])
-			else:
-				pass
-	return local_missing_densities
+			pretty_list.append(str(value))
+			
+	del pretty_list[0:2]
+	
+	pretty_string = ' '.join([str(elem) for elem in pretty_list])
+	
+	return pretty_string
 
-def  write_to_csv(dataframe, recipe_dict, desired_servings):
-	save_location = 'normalized_recipes/' + recipe_dict['week_name'] + '/' + recipe_dict['name'] + ' (normalized)' + '.csv'
+def make_printable(df):
+	
+	if df['ingredient'] == np.nan or df['ingredient'] == 'nan':
+		df['pretty'] = np.nan
+		
+	if pd.isnull(df['pint_raw']):
+		df['pretty'] = str(df['number']) + ' ' + str(df['raw_unit'])
+		
+	else:
+		
+		if pd.notnull(df['pint_mass']):
+			df['pretty'] = df['pint_mass']
+			
+		else:
+			x = little_units(df['pint_volume'])
+			df['pretty'] = x
+			
+	return df
 
-	with open(save_location, mode = 'w') as recipe_location:
-		recipe_writer = csv.writer(recipe_location, lineterminator = '\n')
+def get_printable(df):
+	x = df.apply(make_printable, axis = 1)
+	x = x.rename(columns = {'pretty' : 'number', \
+							'number' : 'old_number'})
+
+	return x[['ingredient', 'number', 'notes']]
+
+def  write_to_csv(df, recipe_dict):
+	pretty_recipe = get_printable(df)
+
+	desired_servings = recipe_dict['desired_servings']
+
+	save_location = (
+					'normalized_recipes/' + \
+					recipe_dict['week_name'] + \
+					'/' + \
+					recipe_dict['name'] + \
+					' (normalized)' + \
+					'.csv' \
+				)
+
+	with open(save_location, mode = 'w') as recipe_loc:
+		recipe_writer = csv.writer(recipe_loc, lineterminator = '\n')
 
 		recipe_writer.writerow([recipe_dict['name']])
-		recipe_writer.writerow([desired_servings, recipe_dict['notes']])
+		recipe_writer.writerow([desired_servings, \
+								recipe_dict['notes']])
 
-	'''
-	mode = 'a' writes in 'append' to avoid writing over the metadata
-	above
-	'''
-	dataframe.to_csv(save_location, index = False, mode = 'a')
-
+	pretty_recipe.to_csv(save_location, index = False, mode = 'a')
 
 def main():
 
-	'''
-	Updates densities before running; densities are calculated 
-	from master_densities.csv by normalize_densities.py and stored
-	in normalized_densities. main.py uses these densities with try_mass()
-	'''
 	normalize_density.update_densities()
 
 	metadata_dict = get_metadata_dicts()
 
-	#Stores the missing densities collected by find_missing_densities()
-	missing_densities = []
+	missing_den = pd.DataFrame()
+	missing_prices = pd.DataFrame()
 
-	#Runs through every recipe going to be used in a given week
 	for recipe in metadata_dict:
-		'''
-		Not necessary to give these separate variables but it makes
-		things easier to read
-		'''
-		recipe_filepath = metadata_dict[recipe]['filepath']
-		recipe_servings = float(metadata_dict[recipe]['servings'])
-		recipe_notes = metadata_dict[recipe]['notes']
 
-		desired_servings = float(input(metadata_dict[recipe]['name'] + ': How many servings?\n >'))
+		df = get_recipe_df(metadata_dict[recipe]['filepath'])
 
-		recipe_dataframe = pd.read_csv(recipe_filepath, header = 2)
+		set_recipe_to_servings(df, metadata_dict[recipe])
 
-		#Set Servings to 1 and then to the desired number of servings
-		multiple = desired_servings * (1 / recipe_servings)
-		recipe_dataframe['number'] = recipe_dataframe['number'] * multiple
+		fix_units(df)
 
-		'''
-		try_metric will convert to metric where possible, conserving units
-		if the conversion is too small to be useful
+		try_pint(df)
 
-		try_mass will convert to mass where units are in ml and the density
-		has been recorded
-		'''
-		numberunit_dataframe = try_metric(recipe_dataframe)
-		mass_frame = try_mass(numberunit_dataframe)
+		try_volume(df)
+		try_mass(df)
 
-		'''
-		missing densities will only return ingredients that stopped
-		at ml, not units that stopped at tbsp or tsp.
+		volume_to_mass(df)
+		mass_to_volume(df)
 
-		The little units don't need to be converted to density
-		'''
-		local_missing_densities = find_missing_densities(mass_frame)
-		missing_densities.extend(local_missing_densities)
+		check_weird_unit(df)
 
-		write_to_csv(mass_frame, metadata_dict[recipe], desired_servings)
+		missing_den = find_missing_densities(df, missing_den)
 
-		print ('%s normalized and saved to:' % (metadata_dict[recipe]['name']))
-		print ([metadata_dict[recipe]['filepath']], '\n')
+		convert_to_metric(df)
 
-	print ('\nThe following ingredients could have been converted')
-	print ('to mass but no density has been recorded for them')
-	print ('in master_densities.py\n')
+		round_everything(df)
 
-	print (set(missing_densities))
+		print (df)
 
-	print ('Finished!')
+		write_to_csv(df, metadata_dict[recipe])
+
+	print (missing_den)
 
 if __name__ == '__main__':
 	main()
