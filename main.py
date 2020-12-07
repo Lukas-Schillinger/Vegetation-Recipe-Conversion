@@ -1,11 +1,14 @@
-import time, warnings, os, csv, normalize_density
+import time, warnings, os, csv
+import normalize_density, normalize_prices
 from pint import UnitRegistry
 import pandas as pd 
 import numpy as np
 
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
+
 test_mode = True # skips selections to quickly fire through recipes
+perform_updates = False # updates prices and densities
 
 def choose_week():
 	global test_mode #                                        TEST CHECK
@@ -478,7 +481,7 @@ def get_printable(df):
 
 	return x[['ingredient', 'number', 'notes']]
 
-def  write_to_csv(df, recipe_dict):
+def write_to_csv(df, recipe_dict):
 	pretty_recipe = get_printable(df)
 
 	desired_servings = recipe_dict['desired_servings']
@@ -503,7 +506,12 @@ def  write_to_csv(df, recipe_dict):
 
 def main():
 
-	normalize_density.update_densities()
+	global perform_updates
+	global test_mode #                                        TEST CHECK
+
+	if perform_updates == True:
+		normalize_density.update_densities()
+		normalize_prices.main()
 
 	metadata_dict = get_metadata_dicts()
 
@@ -539,6 +547,8 @@ def main():
 		write_to_csv(df, metadata_dict[recipe])
 
 	print (missing_den)
+
+	
 
 if __name__ == '__main__':
 	main()
