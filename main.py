@@ -7,8 +7,8 @@ import numpy as np
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
 
-test_mode = True # skips selections to quickly fire through recipes
-perform_updates = False # updates prices and densities
+test_mode = False # skips selections to quickly fire through recipes
+perform_updates = True # updates prices and densities
 
 def choose_week():
 	global test_mode #                                        TEST CHECK
@@ -269,6 +269,9 @@ def apply_weird_unit(df):
 	unit = df['raw_unit']
 	number = df['number']
 
+	if pd.isnull(number) or pd.isnull(unit) or pd.isnull(ingredient):
+		return df
+
 	x = weird_frame.loc[
 		(weird_frame['ingredient'] == ingredient) &
 		(weird_frame['s_unit'] == unit)
@@ -280,16 +283,22 @@ def apply_weird_unit(df):
 		print ('the first one')
 		print (x)
 
-	if len(x) > 0:
+	if len(x) > 0 :
 
 		matched_mass = x.iloc[0]['mass']
 		matched_volume = x.iloc[0]['volume']
 
-		recipe_mass = number * ureg(matched_mass)
-		recipe_volume = number * ureg(matched_volume)
 
-		df['pint_volume'] = recipe_volume
-		df['pint_mass'] = recipe_mass
+		print (matched_volume, matched_mass)
+
+		if pd.notnull(matched_mass):
+			recipe_mass = number * ureg(matched_mass)
+			df['pint_mass'] = recipe_mass
+
+		if pd.notnull(matched_volume):
+			recipe_volume = number * ureg(matched_volume)
+			df['pint_volume'] = recipe_volume
+		
 
 		return df
 
