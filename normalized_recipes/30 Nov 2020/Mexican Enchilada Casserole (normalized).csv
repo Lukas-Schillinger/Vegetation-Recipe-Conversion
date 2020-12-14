@@ -1,18 +1,18 @@
 Mexican Enchilada Casserole
-30.0,makes 1 9x12 pan
-number_unit,ingredient,notes
-1125.0 gram,cashew,
-1800.0 gram,salsa,
-1350.0 gram,plain yogurt,
-565.0 gram,water,
-26.7 gram,smoked paprika,
-25.0 gram,cumin,
-2.1 tablespoon,salt,
-99.0 gram,nutritional yeast,
+40,makes 1 9x12 pan
+ingredient,number,notes
+cashew,1500.0 gram,
+salsa,2400.0 gram,
+plain yogurt,1800.0 gram,
+water,753.3 gram,
+smoked paprika,35.6 gram,
+cumin,33.3 gram,
+salt,2.8 tablespoon,
+nutritional yeast,132.0 gram,
 ,,
-70.0 tortilla,corn tortilla,cut into quarters
-15.0 can,black bean,"15oz can, drained and rinsed"
-1800.0 gram,salsa,
-2200.0 gram,frozen corn,"(3c) -2 cans, i don't know what this means"
+corn tortilla,93.3 tortilla,cut into quarters
+black bean,20.0 can,"15oz can, drained and rinsed"
+salsa,2400.0 gram,
+frozen corn,2933.3 gram,"(3c) -2 cans, i don't know what this means"
 ,,
-nan nan,green onion,
+green onion,,

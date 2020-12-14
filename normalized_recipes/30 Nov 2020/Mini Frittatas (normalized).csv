@@ -1,26 +1,26 @@
 Mini Frittatas
-3030.0,
-number_unit,ingredient,notes
-105391.3 gram,red potato,"skin on, finely diced"
-52695.7 gram,onion,finely diced
-52695.7 gram,bell pepper,finely diced
-52695.7 gram,zucchini,finely diced
-1053.9 clove,garlic,minced
-52695.7 gram,cherry tomato,quartered
-324.7 milliliter,red pepper flake,
-nan nan,"salt, pepper",to taste
+40,
+ingredient,number,notes
+red potato,1391.3 gram,"skin on, finely diced"
+onion,695.7 gram,finely diced
+bell pepper,695.7 gram,finely diced
+zucchini,695.7 gram,finely diced
+garlic,13.9 clove,minced
+cherry tomato,695.7 gram,quartered
+red pepper flake,0.8695652173913044 teaspoon,
+"salt, pepper",,to taste
 ,,
-263.5 container,extra firm tofu,16oz container
-263.5 container,firm tofu,16oz container
-54803.5 gram,soy milk,
-5269.6 gram,corn starch,
-5928.2 gram,nutritional yeast,
-1298.7 milliliter,mustard powder,
-1298.7 milliliter,thyme,
-1298.7 milliliter,marjoram,
-175.7 gram,basil,
-1298.7 milliliter,garlic powder,
-834.4 gram,onion powder,
-1298.7 milliliter,salt,
-395.2 gram,turmeric,
-324.7 milliliter,black pepper,
+extra firm tofu,3.5 container,16oz container
+firm tofu,3.5 container,16oz container
+soy milk,723.5 gram,
+corn starch,69.6 gram,
+nutritional yeast,78.3 gram,
+mustard powder,3.4782608695652177 teaspoon,
+thyme,3.4782608695652177 teaspoon,
+marjoram,3.4782608695652177 teaspoon,
+basil,2.3 gram,
+garlic powder,3.4782608695652177 teaspoon,
+onion powder,11.0 gram,
+salt,3.4782608695652177 teaspoon,
+turmeric,5.2 gram,
+black pepper,0.8695652173913044 teaspoon,

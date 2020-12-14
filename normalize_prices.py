@@ -10,6 +10,7 @@ def write_norm_price(row, number):
 	try:
 		number = number.magnitude
 	except AttributeError:
+		print (row['ingredient'], 'threw an AttributeError')
 		number = float(number)
 		
 	price = row['price'] * (1 / number)
@@ -69,10 +70,11 @@ def normalize_prices(cost_frame):
 			
 		if pd.notnull(s_):
 			s_number, s_unit = s_.split(' ')
-			s_number = round((int(s_number) * (1 / int(s_number))), 1)
+			
 			
 			price = write_norm_price(row, int(s_number))
 			
+			s_number = round((int(s_number) * (1 / int(s_number))), 1)
 			s_number = str(s_number) + ' ' + str(s_unit)
 			s_list.append(s_number)
 		else:
@@ -100,5 +102,8 @@ def main():
 	normalized_frame = normalize_prices(cost_frame)
 	cost_frame.to_csv('normalized_costs.csv', index = False)
 
+	print ('prices updated from master_costs.csv')
+
 if __name__ == '__main__':
 	main()
+	time.sleep(9999)

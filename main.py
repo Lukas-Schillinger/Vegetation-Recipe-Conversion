@@ -288,9 +288,6 @@ def apply_weird_unit(df):
 		matched_mass = x.iloc[0]['mass']
 		matched_volume = x.iloc[0]['volume']
 
-
-		print (matched_volume, matched_mass)
-
 		if pd.notnull(matched_mass):
 			recipe_mass = number * ureg(matched_mass)
 			df['pint_mass'] = recipe_mass
@@ -365,7 +362,9 @@ def set_recipe_to_servings(df, recipe_dict):
 
 	print (name, '\nHow many servings?')
 
-	desired_servings = 40 #                                   TEST CHECK
+	if test_mode == True: #                                   TEST CHECK
+		desired_servings = 40
+		recipe_dict['desired_servings'] = desired_servings
 
 	while test_mode == False: #                               TEST CHECK
 		try:
@@ -375,7 +374,7 @@ def set_recipe_to_servings(df, recipe_dict):
 		except:
 			print ('invalid input')
 
-	multiple = desired_servings * (1 / int(servings))
+	multiple = desired_servings * (1 / float(servings))
 	df['number'] = df['number'] * multiple
 
 def get_recipe_df(filepath):
@@ -416,6 +415,7 @@ def little_units(number):
 		'cup'          : 0 * ureg.cup,    # can be checked later
 		'little'       : 0 * ureg.tbsp
 	}
+
 	if number.magnitude > 60:
 
 		# using fewer lines makes the program run faster, 
@@ -442,14 +442,18 @@ def little_units(number):
 
 		proc_dict['processed_ml'] = round((ml + cup + little), 1)
 	
-	else:
-		if number.magnitude <= 60:
-			little = number.to(ureg.tbsp)
-			proc_dict['little'] = round(little, 1)
+	
+	if number.magnitude <= 60:
+		little = number.to(ureg.tbsp)
+		proc_dict['little'] = round(little, 1)
 
-		if number.magnitude < 30:
-			little = number.to(ureg.tsp)
-			proc_dict['little'] = round(little, 1)
+		proc_dict['processed_ml'] = round(little, 1)
+
+	if number.magnitude < 30:
+		little = number.to(ureg.tsp)
+		proc_dict['little'] = round(little, 1)
+
+		proc_dict['processed_ml'] = round(little, 1)
 			
 	pretty_list = []
 	for value in proc_dict.values():
@@ -461,25 +465,27 @@ def little_units(number):
 	del pretty_list[0:2]
 	
 	pretty_string = ' '.join([str(elem) for elem in pretty_list])
-	
+
 	return pretty_string
 
 def make_printable(df):
 	
-	if df['ingredient'] == np.nan or df['ingredient'] == 'nan':
+	# If its an empty row
+	if pd.isnull(df['ingredient']):
 		df['pretty'] = np.nan
 		
-	if pd.isnull(df['pint_raw']):
+	# if its an ingredient unit that couldn't be converted to pint
+	if pd.isnull(df['pint_raw']) and pd.notnull(df['raw_unit']):
 		df['pretty'] = str(df['number']) + ' ' + str(df['raw_unit'])
 		
-	else:
-		
-		if pd.notnull(df['pint_mass']):
-			df['pretty'] = df['pint_mass']
+	# if there's a mass
+	if pd.notnull(df['pint_mass']):
+		df['pretty'] = df['pint_mass']
 			
-		else:
-			x = little_units(df['pint_volume'])
-			df['pretty'] = x
+	# if there's a volume but no mass
+	if pd.notnull(df['pint_volume']) and pd.isnull(df['pint_mass']):
+		x = little_units(df['pint_volume'])
+		df['pretty'] = x
 			
 	return df
 
@@ -509,9 +515,20 @@ def write_to_csv(df, recipe_dict):
 
 		recipe_writer.writerow([recipe_dict['name']])
 		recipe_writer.writerow([desired_servings, \
-								recipe_dict['notes']])
+										recipe_dict['notes']])
 
 	pretty_recipe.to_csv(save_location, index = False, mode = 'a')
+
+def write_working_csv(df, recipe_dict, write_working = False):
+
+	# Gives me access to the full dataframe to create test sets
+
+	save_location = ('working_recipes/' + \
+					recipe_dict['name'] + '(working).csv')
+
+	df.to_csv(save_location, index = False)
+
+
 
 def main():
 
@@ -548,6 +565,8 @@ def main():
 		missing_den = find_missing_densities(df, missing_den)
 
 		convert_to_metric(df)
+
+		write_working_csv(df, metadata_dict[recipe], write_working = True)
 
 		round_everything(df)
 

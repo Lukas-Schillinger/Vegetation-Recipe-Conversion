@@ -1,16 +1,16 @@
 Granola
-30.0,100g bags
-number_unit,ingredient,notes
-900.0 gram,oatmeal,
-300.0 gram,pumpkin seed,
-325.0 gram,almond,chopped
-300.0 gram,walnut,chopped
-250.0 gram,shredded coconut,
-40.0 gram,cinnamon,
+40,100g bags
+ingredient,number,notes
+oatmeal,1200.0 gram,
+pumpkin seed,400.0 gram,
+almond,433.3 gram,chopped
+walnut,400.0 gram,chopped
+shredded coconut,333.3 gram,
+cinnamon,53.3 gram,
 ,,
-565.0 gram,maple syrup,
-400.0 gram,almond butter,
-20.0 gram,vanilla,
+maple syrup,753.3 gram,
+almond butter,533.3 gram,
+vanilla,26.7 gram,
 ,,
-250.0 gram,dried cherry,
-285.0 gram,chocolate chip,
+dried cherry,333.3 gram,
+chocolate chip,380.0 gram,

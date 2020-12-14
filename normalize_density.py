@@ -39,4 +39,4 @@ def update_densities():
 	normalized_frame['density'] = normalized_frame['combined_mass'] / normalized_frame['combined_volume']
 
 	normalized_frame.to_csv('normalized_densities.csv', index = False)
-	print ('Densities updated from %s\n' % master_densities)
+	print ('Densities updated from %s' % master_densities)
