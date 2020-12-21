@@ -1,5 +1,5 @@
 import time, warnings, os, csv
-import normalize_density, normalize_prices
+import normalize_density, normalize_prices, normalize_and_print
 from pint import UnitRegistry
 import pandas as pd 
 import numpy as np
@@ -11,7 +11,6 @@ test_mode = False # skips selections to quickly fire through recipes
 perform_updates = True # updates prices and densities
 
 def choose_week():
-	global test_mode #                                        TEST CHECK
 
 	week_folder = os.listdir('master_recipes')
 	
@@ -40,7 +39,6 @@ def choose_week():
 	return chosen_week_path, week_name
 
 def choose_all_or_one(metadata_dict):
-	global test_mode #                                        TEST CHECK
 
 	print ('press [a] to normalize all recipes')
 	print ('press [o] to normalize one recipe')
@@ -314,6 +312,9 @@ def convert_to_metric(df):
 	# creates a copy of the row and it was easier to do this
 	# than assign each conversion by index. 
 
+	# everything is converted to metric in one step so subsequet
+	# functions don't need to do it piecemeal
+
 	volume_list = []
 	mass_list = []
 
@@ -356,7 +357,7 @@ def round_everything(df):
 	df['number'] = number_list
 
 def set_recipe_to_servings(df, recipe_dict):
-	global test_mode #                                        TEST CHECK
+
 	servings = recipe_dict['servings']
 	name = recipe_dict['name']
 
@@ -519,21 +520,17 @@ def write_to_csv(df, recipe_dict):
 
 	pretty_recipe.to_csv(save_location, index = False, mode = 'a')
 
-def write_working_csv(df, recipe_dict, write_working = False):
+def write_working_csv(df, recipe_dict):
 
 	# Gives me access to the full dataframe to create test sets
-
-	save_location = ('working_recipes/' + \
-					recipe_dict['name'] + '(working).csv')
-
-	df.to_csv(save_location, index = False)
-
-
+	if test_mode == True:
+		save_location = ('working_recipes/' + \
+						recipe_dict['name'] + '(working).csv')
+		df.to_csv(save_location, index = False)
+	else:
+		pass
 
 def main():
-
-	global perform_updates
-	global test_mode #                                        TEST CHECK
 
 	if perform_updates == True:
 		normalize_density.update_densities()
@@ -566,7 +563,7 @@ def main():
 
 		convert_to_metric(df)
 
-		write_working_csv(df, metadata_dict[recipe], write_working = True)
+		write_working_csv(df, metadata_dict[recipe])
 
 		round_everything(df)
 
@@ -574,8 +571,11 @@ def main():
 
 		write_to_csv(df, metadata_dict[recipe])
 
+		current_week = metadata_dict[recipe]['week_name']
+
 	print (missing_den)
 
+	normalize_and_print.main(current_week, print_ex = False)
 	
 
 if __name__ == '__main__':

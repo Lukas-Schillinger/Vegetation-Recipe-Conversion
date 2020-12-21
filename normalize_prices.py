@@ -10,7 +10,6 @@ def write_norm_price(row, number):
 	try:
 		number = number.magnitude
 	except AttributeError:
-		print (row['ingredient'], 'threw an AttributeError')
 		number = float(number)
 		
 	price = row['price'] * (1 / number)
