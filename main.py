@@ -575,7 +575,7 @@ def main():
 
 	print (missing_den)
 
-	normalize_and_print.main(current_week, print_ex = False)
+	normalize_and_print.main(current_week, print_ex = True)
 	
 
 if __name__ == '__main__':
