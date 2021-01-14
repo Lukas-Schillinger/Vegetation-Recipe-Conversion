@@ -1,4 +1,5 @@
 Peanut Sauce
+<<<<<<< Updated upstream
 40,4oz containers
 ingredient,number,notes
 peanut butter,1516.9 gram,
@@ -9,3 +10,15 @@ ginger,23.6 gram,
 garlic,23.5 clove,
 red pepper flake,8.2 gram,
 water,411.9 gram,
+=======
+22.0,4oz containers
+ingredient,number,notes
+peanut butter,834.3 gram,
+tamari,413.3 gram,
+apple cider vinegar,373.5 gram,
+maple syrup,314.6 gram,
+ginger,13.0 gram,
+garlic,12.9 clove,
+red pepper flake,4.5 gram,
+water,226.6 gram,
+>>>>>>> Stashed changes

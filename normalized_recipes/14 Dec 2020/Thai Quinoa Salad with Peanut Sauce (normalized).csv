@@ -1,4 +1,5 @@
 Thai Quinoa Salad with Peanut Sauce
+<<<<<<< Updated upstream
 40,
 ingredient,number,notes
 quinoa,1600.0 gram,
@@ -18,3 +19,24 @@ carrot,600.0 gram,shredded
 peanut sauce,2.7 tablespoon,
 ,,
 peanut sauce,40.0 piece,4 oz container
+=======
+17.0,
+ingredient,number,notes
+quinoa,680.0 gram,
+red cabbage,1.0 liter 2.0 cup 2.4 tablespoon,shredded
+carrot,4.2 piece,chopped
+bell pepper,4.2 piece,
+green onion,8.5 piece,
+cilantro,68.0 gram,
+cashew,326.2 gram,roasted
+edamame,1.5 cup 3.2 tablespoon,
+cucumber,1.5 cup 3.2 tablespoon,chopped
+broccoli,1.5 cup 3.2 tablespoon,
+,,
+kale,510.0 gram,shredded
+red cabbage,340.0 gram,shredded
+carrot,255.0 gram,shredded
+peanut sauce,3.4 teaspoon,
+,,
+peanut sauce,17.0 piece,4 oz container
+>>>>>>> Stashed changes

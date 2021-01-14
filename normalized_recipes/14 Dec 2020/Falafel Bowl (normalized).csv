@@ -1,4 +1,5 @@
 Falafel Bowl
+<<<<<<< Updated upstream
 40,
 ingredient,number,notes
 cucumber,3.0 liter 0.5 cup 0.9 teaspoon,
@@ -10,3 +11,16 @@ hummus,2.0 liter 1.5 cup 2.2 teaspoon,
 tzatziki,40.0 piece,4oz container
 tofu feta cheese,3.0 liter 0.5 cup 0.9 teaspoon,
 lettuce,9.0 liter 1.75 cup 3.3 tablespoon,
+=======
+13.0,
+ingredient,number,notes
+cucumber,1.0 liter 1.0 tablespoon,
+red cabbage,1.0 liter 1.0 tablespoon,
+cherry tomato,130.0 piece,
+olive,3.25 cup,
+falafel,65.0 piece,
+hummus,3.25 cup,
+tzatziki,13.0 piece,4oz container
+tofu feta cheese,1.0 liter 1.0 tablespoon,
+lettuce,3.0 liter 0.25 cup 1.1 tablespoon,
+>>>>>>> Stashed changes

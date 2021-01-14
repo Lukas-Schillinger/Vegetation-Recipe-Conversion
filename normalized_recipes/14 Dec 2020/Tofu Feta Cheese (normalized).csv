@@ -1,4 +1,5 @@
 Tofu Feta Cheese
+<<<<<<< Updated upstream
 40,
 ingredient,number,notes
 tofu,2191.8 gram,drained
@@ -11,5 +12,19 @@ nutritional yeast,41.1 gram,
 oregano,16.4 gram,
 garlic powder,7.3 gram,
 salt,2.7 teaspoon,
+=======
+13.0,
+ingredient,number,notes
+tofu,712.3 gram,drained
+miso,74.8 gram,
+lemon,1.8 piece,juiced
+apple cider vinegar,128.5 gram,
+olive oil,24.2 gram,
+water,79.0 gram,
+nutritional yeast,13.4 gram,
+oregano,5.3 gram,
+garlic powder,2.4 gram,
+salt,0.9 teaspoon,
+>>>>>>> Stashed changes
 pepper,,
 red pepper flake,,

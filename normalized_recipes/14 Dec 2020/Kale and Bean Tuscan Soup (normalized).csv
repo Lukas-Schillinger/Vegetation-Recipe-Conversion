@@ -1,4 +1,5 @@
 Kale and Bean Tuscan Soup
+<<<<<<< Updated upstream
 40,2 cup serving
 ingredient,number,notes
 chopped onion,2.0 liter 3.5 cup 2.2 teaspoon,
@@ -15,3 +16,21 @@ kidney bean,8.0 can,15oz can
 cannelini bean,8.0 can,15oz can
 basil,64.0 gram,chopped
 kale,8.0 bunch,chopped
+=======
+15.0,2 cup serving
+ingredient,number,notes
+chopped onion,1.0 liter 0.25 cup 1.1 teaspoon,
+celery,306.2 gram,chopped
+carrot,4.5 piece,chopped
+salt,3.0 teaspoon,
+dried thyme,3.0 gram,
+red pepper flake,1.8 gram,
+garlic,12.0 clove,chopped
+vegetable broth,2304.0 gram,
+potato,10.5 piece,diced
+crushed tomato,1190.7 gram,canned
+kidney bean,3.0 can,15oz can
+cannelini bean,3.0 can,15oz can
+basil,24.0 gram,chopped
+kale,3.0 bunch,chopped
+>>>>>>> Stashed changes

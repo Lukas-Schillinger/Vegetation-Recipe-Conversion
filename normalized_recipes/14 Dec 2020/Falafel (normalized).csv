@@ -1,4 +1,5 @@
 Falafel
+<<<<<<< Updated upstream
 40,five falafel per serving
 ingredient,number,notes
 chickpea,15.2 can,
@@ -13,3 +14,19 @@ potato,911.4 gram,"peeled, mashed, baked"
 parsley,1.0 liter 1.25 cup 3.5 tablespoon,
 water,374.3 gram,
 hot sauce,189.9 gram,
+=======
+13.0,five falafel per serving
+ingredient,number,notes
+chickpea,4.9 can,
+chopped onion,2.25 cup 3.5 tablespoon,
+garlic,9.9 clove,
+cumin,13.9 gram,
+coriander,8.2 gram,
+tahini,103.7 gram,
+salt,2.5 teaspoon,
+pepper,1.4 gram,
+potato,296.2 gram,"peeled, mashed, baked"
+parsley,1.75 cup 1.6 tablespoon,
+water,121.7 gram,
+hot sauce,61.7 gram,
+>>>>>>> Stashed changes

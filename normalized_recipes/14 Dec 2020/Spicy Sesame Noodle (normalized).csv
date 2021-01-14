@@ -1,4 +1,5 @@
 Spicy Sesame Noodle
+<<<<<<< Updated upstream
 40,
 ingredient,number,notes
 pasta,4115.9 gram,
@@ -18,3 +19,24 @@ garlic,14.8 clove,minced
 maple syrup,300.1 gram,
 siracha,1.75 cup 1.6 tablespoon,
 rice wine vinegar,1.75 cup 1.6 tablespoon,
+=======
+21.0,
+ingredient,number,notes
+pasta,2160.9 gram,
+tempeh,5.4 package,
+tamari,86.9 gram,
+red pepper flake,1.8 gram,
+sesame seed,0.75 cup 1.3 teaspoon,
+scallion,15.6 piece,chopped
+,,
+tahini,435.6 gram,
+almond butter,497.8 gram,
+tamari,496.8 gram,
+vegetable broth,373.3 gram,
+powdered sugar,10.5 gram,
+onion powder,12.3 gram,
+garlic,7.8 clove,minced
+maple syrup,157.6 gram,
+siracha,0.75 cup 3.6 tablespoon,
+rice wine vinegar,0.75 cup 3.6 tablespoon,
+>>>>>>> Stashed changes

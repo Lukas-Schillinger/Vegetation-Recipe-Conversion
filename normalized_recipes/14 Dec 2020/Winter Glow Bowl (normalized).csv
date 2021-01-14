@@ -1,4 +1,5 @@
 Winter Glow Bowl
+<<<<<<< Updated upstream
 40,
 ingredient,number,notes
 quinoa,4000.0 gram,
@@ -18,3 +19,24 @@ garlic powder,13.3 gram,
 red pepper flake,11.7 gram,
 salt,5.0 teaspoon,
 pepper,5.8 gram,
+=======
+11.0,
+ingredient,number,notes
+quinoa,1100.0 gram,
+beet,5.5 piece,"large, grated"
+carrot,5.5 piece,grated
+green apple,2.8 piece,grated
+orange,11.0 piece,"small, sweetie"
+kale,2.8 bunch,chopped
+sweet potato,11.0 piece,baked
+walnut,330.0 gram,
+tahini,154.0 gram,
+coconut amino,0.5 cup 3.0 tablespoon,
+lemon juice,83.8 gram,
+apple cider vinegar,33.1 gram,
+ground ginger,2.3 gram,
+garlic powder,3.7 gram,
+red pepper flake,3.2 gram,
+salt,1.4 teaspoon,
+pepper,1.6 gram,
+>>>>>>> Stashed changes

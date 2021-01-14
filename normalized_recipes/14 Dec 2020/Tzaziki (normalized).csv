@@ -1,4 +1,5 @@
 Tzaziki
+<<<<<<< Updated upstream
 40,4oz containers
 ingredient,number,notes
 cashew,558.2 gram,
@@ -7,3 +8,13 @@ garlic,29.1 clove,
 salt,5.5 teaspoon,
 cucumber,1649.4 gram,
 dill,0.75 cup 2.5 tablespoon,chopped
+=======
+13.0,4oz containers
+ingredient,number,notes
+cashew,181.4 gram,
+yogurt,868.6 gram,
+garlic,9.5 clove,
+salt,1.8 teaspoon,
+cucumber,536.1 gram,
+dill,0.25 cup 2.2 teaspoon,chopped
+>>>>>>> Stashed changes
