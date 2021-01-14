@@ -40,18 +40,28 @@ def print_to_printer():
 		os.startfile(path, 'print')
 		print ('%s sent to printer' % recipe)
 
+def loading_animation():
+	animation = '/—\\|'
+	for char in animation:
+		sys.stdout.write('\r' + char)
+		time.sleep(.08)
+		sys.stdout.flush()
+
 def main(current_week, print_ex = False):
 
 	print ('creating temporary excel directory')
 	try:
 		os.mkdir('working_excel')
 	except OSError:
+		print ('directory already exists or an error occurred')
 		pass
 
 	print ('converting CSVs to excel sheets')
 	make_excel_sheets(current_week)
+
 	print ('resizing column width')
 	fix_column_width()
+	print ('columns widths resized')
 
 	if print_ex == True:
 		print_to_printer()
