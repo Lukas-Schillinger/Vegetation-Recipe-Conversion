@@ -11,6 +11,14 @@ test_mode = False # skips selections to quickly fire through recipes
 perform_updates = True # updates prices and densities
 
 def choose_week():
+<<<<<<< Updated upstream
+=======
+
+	# choose which week's recipes to normalize
+	# skipped if test_mode is True
+
+	global test_mode #                                        TEST CHECK
+>>>>>>> Stashed changes
 
 	week_folder = os.listdir('master_recipes')
 	
@@ -39,6 +47,14 @@ def choose_week():
 	return chosen_week_path, week_name
 
 def choose_all_or_one(metadata_dict):
+<<<<<<< Updated upstream
+=======
+
+	# choose to normalize all the recipes or just one
+	# skipped if test_mode is True
+
+	global test_mode #                                        TEST CHECK
+>>>>>>> Stashed changes
 
 	print ('press [a] to normalize all recipes')
 	print ('press [o] to normalize one recipe')
@@ -92,6 +108,10 @@ def choose_all_or_one(metadata_dict):
 		print ('ERROR ERROR ERROR YOU SHOULDNT SEE THIS')
 
 def get_metadata_dicts():
+
+	# collects information about the recipe not included in the
+	# datatable like name, what week it's from, servings etc. 
+
 	chosen_week_path, week_name = choose_week()
 	recipe_file_names = os.listdir(chosen_week_path)
 
@@ -137,6 +157,7 @@ def get_metadata_dicts():
 def try_pint(df):
 
 	# fills in the [pint_raw] column
+
 	# simpler to just get a pint object and then decide where
 	# it goes than fill in [volume] and [mass] in one mega function
 
@@ -193,6 +214,9 @@ def try_mass(df): # fill in the [mass] column
 
 def volume_to_mass(df):
 
+	# takes the volume, finds if there's a density entry for that 
+	# ingredient, and fills in a mass
+
 	# this needs to be redone with the same DataFrame.loc method used
 	# in apply_weird_unit()
 
@@ -224,6 +248,8 @@ def volume_to_mass(df):
 	df['pint_mass'] = mass_list
 
 def mass_to_volume(df):
+
+	# does the opposite of the volume_to_mass() function
 
 	# this needs to be redone with the same DataFrame.loc method used
 	# in apply_weird_unit()
@@ -257,8 +283,9 @@ def mass_to_volume(df):
 
 def apply_weird_unit(df):
 
-	# fills in mass or volume for units not given in pint recognizeable
-	# units like head of cauliflower or can of beans.
+	# fills in mass or volume for ingredients not given in pint
+	# recognizeable units like head of cauliflower or can of beans.
+
 	# this function is called by check_weird_unit()
 
 	weird_frame = pd.read_csv('weird_units.csv')
@@ -298,6 +325,9 @@ def apply_weird_unit(df):
 		return df
 
 def check_weird_unit(df):
+
+	# searches recipe dataframe for ingredients in weird_units.csv
+
 	weird_frame = pd.read_csv('weird_units.csv')
 
 	unconverted = df[df['pint_raw'].isnull()]
@@ -307,6 +337,9 @@ def check_weird_unit(df):
 	df.fillna(x, inplace = True)
 
 def convert_to_metric(df):
+
+	# converts pint_mass and pint_volume to g and ml so other
+	# functions don't need to constantly redo this
 
 	# this function reassigns the entire row because iterrows()
 	# creates a copy of the row and it was easier to do this
@@ -340,6 +373,7 @@ def round_everything(df):
 
 	# these units will eventually be copied into the final frame
 	# so they need to be a little more human-readable.
+
 	# volume omitted because it's handled differently
 	# by make_printable()
 
@@ -358,6 +392,13 @@ def round_everything(df):
 
 def set_recipe_to_servings(df, recipe_dict):
 
+<<<<<<< Updated upstream
+=======
+	# multiplies all the ingredients by (1 / original_servings) then
+	# multiplies by desired_servings
+
+	global test_mode #                                        TEST CHECK
+>>>>>>> Stashed changes
 	servings = recipe_dict['servings']
 	name = recipe_dict['name']
 
@@ -379,12 +420,17 @@ def set_recipe_to_servings(df, recipe_dict):
 	df['number'] = df['number'] * multiple
 
 def get_recipe_df(filepath):
+
+	# creates dataframes from the passed filepaths with the columns
+	# to be filled in later
+
 	df = pd.read_csv(filepath, header = 2)
 	df = df.rename(columns = {'unit' : 'raw_unit'})
 
 	df['pint_raw'] = np.nan
 	df['pint_volume'] = np.nan
 	df['pint_mass'] = np.nan
+	df['price'] = np.nan
 
 	return df
 
@@ -392,6 +438,12 @@ def fix_units(df):
 	df['raw_unit'] = df['raw_unit'].replace('tbs', 'tbsp')
 
 def find_missing_densities(df, missing_den):
+
+	# the main priority for densities is getting a mass
+
+	# volume is only used derived from density in case price 
+	# requires a volume measurement
+
 	x = df.loc[
 			(pd.isnull(df['pint_mass'])) &
 			(pd.notnull(df['pint_volume']))
@@ -404,6 +456,9 @@ def find_missing_densities(df, missing_den):
 	return y
 
 def little_units(number):
+
+	# takes something like '2378 ml' and converts it into a more user
+	# friendly format like 'X liters, X cups, X tablespoons'
 
 	# this function uses a dictionary and records an 'original' and 
 	# a 'processed_ml' so that if something is tweaked it can be 
@@ -523,12 +578,19 @@ def write_to_csv(df, recipe_dict):
 def write_working_csv(df, recipe_dict):
 
 	# Gives me access to the full dataframe to create test sets
+<<<<<<< Updated upstream
 	if test_mode == True:
 		save_location = ('working_recipes/' + \
 						recipe_dict['name'] + '(working).csv')
 		df.to_csv(save_location, index = False)
 	else:
 		pass
+=======
+
+	save_location = ('working_recipes/' + \
+					recipe_dict['name'] + '(working).csv')
+	df.to_csv(save_location, index = False)
+>>>>>>> Stashed changes
 
 def main():
 
