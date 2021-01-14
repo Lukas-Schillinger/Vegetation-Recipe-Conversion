@@ -11,14 +11,9 @@ test_mode = False # skips selections to quickly fire through recipes
 perform_updates = True # updates prices and densities
 
 def choose_week():
-<<<<<<< Updated upstream
-=======
 
 	# choose which week's recipes to normalize
 	# skipped if test_mode is True
-
-	global test_mode #                                        TEST CHECK
->>>>>>> Stashed changes
 
 	week_folder = os.listdir('master_recipes')
 	
@@ -47,14 +42,9 @@ def choose_week():
 	return chosen_week_path, week_name
 
 def choose_all_or_one(metadata_dict):
-<<<<<<< Updated upstream
-=======
 
 	# choose to normalize all the recipes or just one
 	# skipped if test_mode is True
-
-	global test_mode #                                        TEST CHECK
->>>>>>> Stashed changes
 
 	print ('press [a] to normalize all recipes')
 	print ('press [o] to normalize one recipe')
@@ -392,13 +382,9 @@ def round_everything(df):
 
 def set_recipe_to_servings(df, recipe_dict):
 
-<<<<<<< Updated upstream
-=======
 	# multiplies all the ingredients by (1 / original_servings) then
 	# multiplies by desired_servings
 
-	global test_mode #                                        TEST CHECK
->>>>>>> Stashed changes
 	servings = recipe_dict['servings']
 	name = recipe_dict['name']
 
@@ -578,20 +564,18 @@ def write_to_csv(df, recipe_dict):
 def write_working_csv(df, recipe_dict):
 
 	# Gives me access to the full dataframe to create test sets
-<<<<<<< Updated upstream
+
 	if test_mode == True:
 		save_location = ('working_recipes/' + \
 						recipe_dict['name'] + '(working).csv')
 		df.to_csv(save_location, index = False)
 	else:
 		pass
-=======
 
 	save_location = ('working_recipes/' + \
 					recipe_dict['name'] + '(working).csv')
 	df.to_csv(save_location, index = False)
->>>>>>> Stashed changes
-
+	
 def main():
 
 	if perform_updates == True:
