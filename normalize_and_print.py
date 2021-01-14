@@ -68,6 +68,16 @@ def main(current_week, print_ex = False):
 	else:
 		print ('print_ex set to false')
 
+	# excel processes need to close before working_excel can
+	# be removed. not really sure how to do this so the fix 
+	# for right now is making the program wait 10 seconds
+	# before trying to delete them.
+
+	# maybe launch the print_to_printer() in a separate shell
+	# and proceed only when that process is closed?
+
+	time.sleep(10)
+
 	shutil.rmtree('working_excel')
 	print ('temporay excel directory deleted')
 	print ('normalize_and_print complete')
