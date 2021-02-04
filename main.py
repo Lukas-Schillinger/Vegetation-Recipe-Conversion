@@ -1,8 +1,16 @@
-import time, warnings, os, csv
-import normalize_density, normalize_prices, normalize_and_print
+import time, warnings, os, csv, platform
+import normalize_density, normalize_prices
 from pint import UnitRegistry
 import pandas as pd 
 import numpy as np
+
+
+# lets me edit on linux
+win_system = False
+if platform.system() != 'Linux':
+	win_system = True
+	import normalize_and_print
+
 
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
@@ -621,7 +629,8 @@ def main():
 
 	print (missing_den)
 
-	normalize_and_print.main(current_week, print_ex = True)
+	if win_system:
+		normalize_and_print.main(current_week, print_ex = True)
 	
 
 if __name__ == '__main__':
