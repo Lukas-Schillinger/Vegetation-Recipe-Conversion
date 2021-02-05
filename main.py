@@ -15,8 +15,8 @@ if platform.system() != 'Linux':
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
 
-test_mode = False # skips selections to quickly fire through recipes
-perform_updates = True # updates prices and densities
+test_mode = True # skips selections to quickly fire through recipes
+perform_updates = False # updates prices and densities
 
 def choose_week():
 
@@ -148,9 +148,16 @@ def get_metadata_dicts():
 		metadata_dict.update(metadata_entry)
 	
 	metadata_dict = choose_all_or_one(metadata_dict)
+	metadata_week = {'week' : week_name}
 
-	return metadata_dict
+	return metadata_dict, metadata_week
 
+def create_normalized_directory(week_name):
+	if os.path.isdir('normalized_recipes/' + week_name):
+		print ('directory already exists for %s' % (week_name))
+	else:
+		os.mkdir('normalized_recipes/' + week_name)
+		print ('directory created for %s' % (week_name))
 
 def try_pint(df):
 
@@ -590,8 +597,11 @@ def main():
 		normalize_density.update_densities()
 		normalize_prices.main()
 
-	metadata_dict = get_metadata_dicts()
+	metadata_dict, metadata_week = get_metadata_dicts()
 
+	create_normalized_directory(metadata_week['week'])
+
+	# empty frames to collect missing info
 	missing_den = pd.DataFrame()
 	missing_prices = pd.DataFrame()
 
@@ -630,7 +640,7 @@ def main():
 	print (missing_den)
 
 	if win_system:
-		normalize_and_print.main(current_week, print_ex = True)
+		normalize_and_print.main(metadata_week['week'], print_ex = False)
 	
 
 if __name__ == '__main__':
