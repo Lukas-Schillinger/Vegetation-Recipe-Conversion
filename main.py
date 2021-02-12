@@ -15,7 +15,7 @@ if platform.system() != 'Linux':
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
 
-test_mode = True # skips selections to quickly fire through recipes
+test_mode = False # skips selections to quickly fire through recipes
 perform_updates = False # updates prices and densities
 
 def choose_week():
@@ -635,12 +635,10 @@ def main():
 
 		write_to_csv(df, metadata_dict[recipe])
 
-		current_week = metadata_dict[recipe]['week_name']
-
 	print (missing_den)
 
 	if win_system:
-		normalize_and_print.main(metadata_week['week'], print_ex = False)
+		normalize_and_print.main(metadata_week['week'], print_ex = True)
 	
 
 if __name__ == '__main__':
