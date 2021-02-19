@@ -1,4 +1,4 @@
-import time, warnings, os, csv, platform
+import time, warnings, os, csv, platform, textwrap
 import normalize_density, normalize_prices
 from pint import UnitRegistry
 import pandas as pd 
@@ -15,8 +15,8 @@ if platform.system() != 'Linux':
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
 
-test_mode = False # skips selections to quickly fire through recipes
-perform_updates = False # updates prices and densities
+test_mode = True # skips selections to quickly fire through recipes
+perform_updates = True # updates prices and densities
 
 def choose_week():
 
@@ -148,6 +148,9 @@ def get_metadata_dicts():
 		metadata_dict.update(metadata_entry)
 	
 	metadata_dict = choose_all_or_one(metadata_dict)
+
+	# meta_data week is used for normalize_and_print so it
+	# can find the correct week to print
 	metadata_week = {'week' : week_name}
 
 	return metadata_dict, metadata_week
@@ -326,7 +329,6 @@ def apply_weird_unit(df):
 			recipe_volume = number * ureg(matched_volume)
 			df['pint_volume'] = recipe_volume
 		
-
 		return df
 
 def check_weird_unit(df):
@@ -349,9 +351,6 @@ def convert_to_metric(df):
 	# this function reassigns the entire row because iterrows()
 	# creates a copy of the row and it was easier to do this
 	# than assign each conversion by index. 
-
-	# everything is converted to metric in one step so subsequet
-	# functions don't need to do it piecemeal
 
 	volume_list = []
 	mass_list = []
@@ -425,7 +424,18 @@ def get_recipe_df(filepath):
 	# creates dataframes from the passed filepaths with the columns
 	# to be filled in later
 
-	df = pd.read_csv(filepath, header = 2)
+	# separates the instructions from the recipe numbers by looking
+	# for the word 'instructions'
+	# will break if the ingredient 'instructions' is used
+	with open(filepath) as o_recipe:
+		read_recipe = csv.reader(o_recipe)
+		list_recipe = list(read_recipe)
+		end_of_numbers = len(list_recipe) - 3
+		for line in list_recipe:
+			if 'Instructions' in line:
+				end_of_numbers = (list_recipe.index(line)-3)
+
+	df = pd.read_csv(filepath, header=2, nrows=(end_of_numbers))
 	df = df.rename(columns = {'unit' : 'raw_unit'})
 
 	df['pint_raw'] = np.nan
@@ -442,7 +452,7 @@ def find_missing_densities(df, missing_den):
 
 	# the main priority for densities is getting a mass
 
-	# volume is only used derived from density in case price 
+	# volume is only derived from density in case price 
 	# requires a volume measurement
 
 	x = df.loc[
@@ -566,7 +576,7 @@ def write_to_csv(df, recipe_dict):
 					' (normalized)' + \
 					'.csv' \
 				)
-
+	# write the title, servings, notes, and numbers
 	with open(save_location, mode = 'w') as recipe_loc:
 		recipe_writer = csv.writer(recipe_loc, lineterminator = '\n')
 
@@ -575,6 +585,41 @@ def write_to_csv(df, recipe_dict):
 										recipe_dict['notes']])
 
 	pretty_recipe.to_csv(save_location, index = False, mode = 'a')
+
+def write_instructions(recipe_dict):
+	save_location = (
+				'normalized_recipes/' + \
+				recipe_dict['week_name'] + \
+				'/' + \
+				recipe_dict['name'] + \
+				' (normalized)' + \
+				'.csv' \
+			)
+	with open(recipe_dict['filepath']) as o_recipe:
+		read_recipe = csv.reader(o_recipe)
+		list_recipe = list(read_recipe)
+		end_of_numbers = len(list_recipe)
+		for line in list_recipe:
+			if 'Instructions' in line:
+				end_of_numbers = (list_recipe.index(line))
+
+	wrapped_text = []
+	for line in list_recipe[end_of_numbers:len(list_recipe)]:
+		joined = ''.join(line)
+		wrapped = textwrap.wrap(joined, width=100)
+		wrapped_text.append(wrapped)
+	
+	with open(save_location, 'a') as o_target:
+		o_target.write('\n')
+		for paragraph in wrapped_text:
+			if not paragraph:
+				o_target.write('\n')
+			if len(paragraph) < 2 and paragraph:
+				o_target.write(paragraph[0] + '\n')
+			else:
+				for line in paragraph:
+					o_target.write(line + '\n')
+
 
 def write_working_csv(df, recipe_dict):
 
@@ -596,6 +641,7 @@ def main():
 	if perform_updates == True:
 		normalize_density.update_densities()
 		normalize_prices.main()
+		print ('updates complete\n')
 
 	metadata_dict, metadata_week = get_metadata_dicts()
 
@@ -635,10 +681,12 @@ def main():
 
 		write_to_csv(df, metadata_dict[recipe])
 
+		write_instructions(metadata_dict[recipe])
+
 	print (missing_den)
 
 	if win_system:
-		normalize_and_print.main(metadata_week['week'], print_ex = True)
+		normalize_and_print.main(metadata_week['week'], print_ex = False)
 	
 
 if __name__ == '__main__':

@@ -1,0 +1,12 @@
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
+10.0,cup,quinoa,,10.0 cup,2365.8823649999995 milliliter,2000.0000000000002 gram,
+10.0,cup,vegetable broth,,10.0 cup,2365.8823649999995 milliliter,1919.9999999999998 gram,
+7.5,cup,water,,7.5 cup,1774.4117737499996 milliliter,1774.4117737499996 gram,
+,,,,,,,
+5.0,cup,salsa,,5.0 cup,1182.9411824999997 milliliter,,
+10.0,tbsp,nutritional yeast,,10.0 tablespoon,147.86764781249997 milliliter,37.5 gram,
+20.0,tsp,cumin,,20.0 teaspoon,98.57843187499996 milliliter,49.99999999999999 gram,
+20.0,tsp,chili powder,,20.0 teaspoon,98.57843187499996 milliliter,61.11111111111111 gram,
+5.0,tsp,garlic powder,,5.0 teaspoon,24.64460796874999 milliliter,13.333333333333332 gram,
+5.0,tsp,salt,,5.0 teaspoon,24.64460796874999 milliliter,,
+5.0,tsp,black pepper,,5.0 teaspoon,24.64460796874999 milliliter,,

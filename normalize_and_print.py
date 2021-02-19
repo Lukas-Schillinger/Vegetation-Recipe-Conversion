@@ -20,17 +20,48 @@ def make_excel_sheets(current_week):
 				ws.append(row)
 			wb.save('working_excel\\' + name + '.xlsx')
 
+def title_format(sheet):
+	sheet.range('A1').api.Font.Name = 'JMH Typewriter'
+	sheet.range('A1').api.Font.Size = 16
+	return sheet
+
+def add_borders(sheet, instruction_flag):
+	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(9).LineStyle = 1
+	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(7).LineStyle = 1
+	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(10).LineStyle = 1
+	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(8).LineStyle = 1
+	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(12).LineStyle = 1
+	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(11).LineStyle = 1
+	return sheet
+
 def fix_column_width():
+	app = xw.App(visible = False)
 	for recipe in (os.listdir('working_excel')):
 
 		app = xw.App(visible = False)
 		wb = xw.Book(('working_excel\\' + recipe))
+		sheet = wb.sheets[0]
 
-		for ws in wb.sheets:
-			ws.autofit(axis = 'columns')
+		lrow = sheet.range('A' + str(sheet.cells.last_cell.row)).end('up').row
+
+		instruction_flag = lrow + 2
+		for i in range(1, lrow - 1):
+			if 'Instruction' in str(sheet.range('A{}'.format(i)).value):
+				instruction_flag = i
+
+		sheet.range('A1:A{}'.format(instruction_flag-1)).columns.autofit()
+		sheet.range('B1:B{}'.format(instruction_flag-1)).columns.autofit()
+		sheet.range('C1:C{}'.format(instruction_flag-1)).columns.autofit()
+
+		# style options
+		sheet = title_format(sheet)
+		sheet = add_borders(sheet, instruction_flag)
+		sheet.range('A{}'.format(instruction_flag)).api.Font.Bold = True
 
 		wb.save('working_excel\\' + recipe)
-		app.quit()
+		wb.close()
+
+	app.quit()	
 
 def print_to_printer():
 	for recipe in (os.listdir('working_excel')): 
@@ -39,13 +70,6 @@ def print_to_printer():
 		print ('printing %s' % recipe)
 		os.startfile(path, 'print')
 		print ('%s sent to printer' % recipe)
-
-def loading_animation():
-	animation = '/—\\|'
-	for char in animation:
-		sys.stdout.write('\r' + char)
-		time.sleep(.08)
-		sys.stdout.flush()
 
 def main(current_week, print_ex = False):
 
@@ -59,12 +83,13 @@ def main(current_week, print_ex = False):
 	print ('converting CSVs to excel sheets')
 	make_excel_sheets(current_week)
 
-	print ('resizing column width')
+	print ('making the recipes pretty')
 	fix_column_width()
-	print ('columns widths resized')
+	print ('recipes are pretty now')
 
 	if print_ex == True:
 		print_to_printer()
+		time.sleep(10)
 	else:
 		print ('print_ex set to false')
 
@@ -76,8 +101,9 @@ def main(current_week, print_ex = False):
 	# maybe launch the print_to_printer() in a separate shell
 	# and proceed only when that process is closed?
 
-	time.sleep(10)
-
-	shutil.rmtree('working_excel')
+	#shutil.rmtree('working_excel')
 	print ('temporay excel directory deleted')
 	print ('normalize_and_print complete')
+
+if __name__ == '__main__':
+	main()

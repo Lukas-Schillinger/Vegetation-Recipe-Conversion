@@ -1,0 +1,8 @@
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
+1600.0,gram,carrot,circles,1600.0 gram,,1600.0 gram,
+1600.0,gram,cabbage,food processed,1600.0 gram,,1600.0 gram,
+2800.0,gram,grape tomato,,2800.0 gram,,2800.0 gram,
+1600.0,gram,celery,diced,1600.0 gram,,1600.0 gram,
+6000.0,gram,quinoa,,6000.0 gram,7097.6470949999975 milliliter,6000.0 gram,
+12000.0,gram,buffalo cauliflower,,12000.0 gram,,12000.0 gram,
+40.0,4oz,ranch,,160.0 ounce,,4535.923700000001 gram,
