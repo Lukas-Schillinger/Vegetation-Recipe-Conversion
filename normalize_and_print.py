@@ -37,6 +37,7 @@ def add_borders(sheet, instruction_flag):
 def fix_column_width():
 	app = xw.App(visible = False)
 	for recipe in (os.listdir('working_excel')):
+		print (f'making {recipe} pretty')
 
 		app = xw.App(visible = False)
 		wb = xw.Book(('working_excel\\' + recipe))
@@ -61,6 +62,8 @@ def fix_column_width():
 		wb.save('working_excel\\' + recipe)
 		wb.close()
 
+		print (f'{recipe} is pretty now\n')
+
 	app.quit()	
 
 def print_to_printer():
@@ -72,24 +75,27 @@ def print_to_printer():
 		print ('%s sent to printer' % recipe)
 
 def main(current_week, print_ex = False):
-
-	print ('creating temporary excel directory')
+	print ('\ncreating temporary excel directory')
 	try:
 		os.mkdir('working_excel')
+		print ('directory created')
 	except OSError:
 		print ('directory already exists or an error occurred')
 		pass
 
-	print ('converting CSVs to excel sheets')
+	print ('\nconverting CSVs to excel sheets')
 	make_excel_sheets(current_week)
+	print ('conversions complete')
 
-	print ('making the recipes pretty')
+	print ('\nmaking the recipes pretty\n')
 	fix_column_width()
 	print ('recipes are pretty now')
 
+	print ('\nstarting printing')
 	if print_ex == True:
 		print_to_printer()
 		time.sleep(10)
+		print ('recipes sent to printer')
 	else:
 		print ('print_ex set to false')
 
@@ -101,8 +107,8 @@ def main(current_week, print_ex = False):
 	# maybe launch the print_to_printer() in a separate shell
 	# and proceed only when that process is closed?
 
-	#shutil.rmtree('working_excel')
-	print ('temporay excel directory deleted')
+	shutil.rmtree('working_excel')
+	print ('\ntemporay excel directory deleted')
 	print ('normalize_and_print complete')
 
 if __name__ == '__main__':
