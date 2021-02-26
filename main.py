@@ -15,8 +15,8 @@ if platform.system() != 'Linux':
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
 
-test_mode = True # skips selections to quickly fire through recipes
-perform_updates = True # updates prices and densities
+test_mode = False # skips selections to quickly fire through recipes
+perform_updates = False # updates prices and densities
 
 def choose_week():
 
@@ -46,7 +46,7 @@ def choose_week():
 			print (e, '\n')
 	
 	chosen_week_path = 'master_recipes/' + week_selection
-	week_name = chosen_week_path.split('/')[1]
+	week_name = week_selection
 	return chosen_week_path, week_name
 
 def choose_all_or_one(metadata_dict):
@@ -686,7 +686,7 @@ def main():
 	print (missing_den)
 
 	if win_system:
-		normalize_and_print.main(metadata_week['week'], print_ex = False)
+		normalize_and_print.main(metadata_week['week'], print_ex = True)
 	
 
 if __name__ == '__main__':

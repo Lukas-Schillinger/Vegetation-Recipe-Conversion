@@ -101,7 +101,7 @@ def main(current_week, print_ex = False):
 	# maybe launch the print_to_printer() in a separate shell
 	# and proceed only when that process is closed?
 
-	#shutil.rmtree('working_excel')
+	shutil.rmtree('working_excel')
 	print ('temporay excel directory deleted')
 	print ('normalize_and_print complete')
 
