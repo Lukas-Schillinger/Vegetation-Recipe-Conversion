@@ -1,7 +1,7 @@
 import time, warnings, os, csv, platform, textwrap
 import normalize_density, normalize_prices
 from pint import UnitRegistry
-import pandas as pd 
+import pandas as pd
 import numpy as np
 
 
@@ -24,18 +24,18 @@ def choose_week():
 	# skipped if test_mode is True
 
 	week_folder = os.listdir('master_recipes')
-	
+
 	count = 0
 	numbered_weeks = []
-	
+
 	for week in week_folder:
 		numbered_week = '[' + str(count) + ']' + ' ' + week
 		numbered_weeks.append(numbered_week)
 		count += 1
-		
+
 	print (*numbered_weeks, sep = '\n')
 	print ('input number week')
-	
+
 	week_selection = week_folder[0] #                         TEST CHECK
 
 	while test_mode == False: #                               TEST CHECK
@@ -44,7 +44,7 @@ def choose_week():
 			break
 		except (IndexError, ValueError) as e:
 			print (e, '\n')
-	
+
 	chosen_week_path = 'master_recipes/' + week_selection
 	week_name = week_selection
 	return chosen_week_path, week_name
@@ -108,7 +108,7 @@ def choose_all_or_one(metadata_dict):
 def get_metadata_dicts():
 
 	# collects information about the recipe not included in the
-	# datatable like name, what week it's from, servings etc. 
+	# datatable like name, what week it's from, servings etc.
 
 	chosen_week_path, week_name = choose_week()
 	recipe_file_names = os.listdir(chosen_week_path)
@@ -119,22 +119,22 @@ def get_metadata_dicts():
 		recipe_paths.append(path)
 
 	# I'm using a dict here to pass information instead of directly
-	# assigning in case more information needs to be passed on 
-	# later like cooking instructions etc. 
+	# assigning in case more information needs to be passed on
+	# later like cooking instructions etc.
 
 	# Pandas can't really handle csv data outside of a dataframe or
-	# series so this information is parsed separately 
+	# series so this information is parsed separately
 
 	metadata_dict = {}
 	for path in recipe_paths:
 		with open(path) as recipe_csv:
 			open_recipe = csv.reader(recipe_csv)
 			rows = list(open_recipe)
-			
+
 			name = rows[0][0]
 			servings = rows[1][0]
 			notes = rows[1][1]
-			
+
 			metadata_entry = {
 				name : {
 					'name'             : name,
@@ -144,9 +144,9 @@ def get_metadata_dicts():
 					'notes'            : notes,
 					'desired_servings' : None
 				}
-			}    
+			}
 		metadata_dict.update(metadata_entry)
-	
+
 	metadata_dict = choose_all_or_one(metadata_dict)
 
 	# meta_data week is used for normalize_and_print so it
@@ -174,12 +174,12 @@ def try_pint(df):
 		x = df.loc[i]
 		unit = x['raw_unit']
 		number = x['number']
-		
+
 		try:
 			pint_raw = number * ureg(unit)
 		except AttributeError:
 			pint_raw = np.nan
-		
+
 		pint_list.append(pint_raw)
 
 	df['pint_raw'] = pint_list
@@ -222,7 +222,7 @@ def try_mass(df): # fill in the [mass] column
 
 def volume_to_mass(df):
 
-	# takes the volume, finds if there's a density entry for that 
+	# takes the volume, finds if there's a density entry for that
 	# ingredient, and fills in a mass
 
 	# this needs to be redone with the same DataFrame.loc method used
@@ -328,7 +328,7 @@ def apply_weird_unit(df):
 		if pd.notnull(matched_volume):
 			recipe_volume = number * ureg(matched_volume)
 			df['pint_volume'] = recipe_volume
-		
+
 		return df
 
 def check_weird_unit(df):
@@ -340,7 +340,7 @@ def check_weird_unit(df):
 	unconverted = df[df['pint_raw'].isnull()]
 
 	x = unconverted.apply(apply_weird_unit, axis = 1)
-	
+
 	df.fillna(x, inplace = True)
 
 def convert_to_metric(df):
@@ -350,7 +350,7 @@ def convert_to_metric(df):
 
 	# this function reassigns the entire row because iterrows()
 	# creates a copy of the row and it was easier to do this
-	# than assign each conversion by index. 
+	# than assign each conversion by index.
 
 	volume_list = []
 	mass_list = []
@@ -370,7 +370,7 @@ def convert_to_metric(df):
 			g_mass = np.nan
 			mass_list.append(g_mass)
 
-	df['pint_volume'] = volume_list	
+	df['pint_volume'] = volume_list
 	df['pint_mass'] = mass_list
 
 def round_everything(df):
@@ -452,7 +452,7 @@ def find_missing_densities(df, missing_den):
 
 	# the main priority for densities is getting a mass
 
-	# volume is only derived from density in case price 
+	# volume is only derived from density in case price
 	# requires a volume measurement
 
 	x = df.loc[
@@ -471,8 +471,8 @@ def little_units(number):
 	# takes something like '2378 ml' and converts it into a more user
 	# friendly format like 'X liters, X cups, X tablespoons'
 
-	# this function uses a dictionary and records an 'original' and 
-	# a 'processed_ml' so that if something is tweaked it can be 
+	# this function uses a dictionary and records an 'original' and
+	# a 'processed_ml' so that if something is tweaked it can be
 	# quickly thrown into a df and checked
 
 	proc_dict = {
@@ -485,31 +485,31 @@ def little_units(number):
 
 	if number.magnitude > 60:
 
-		# using fewer lines makes the program run faster, 
+		# using fewer lines makes the program run faster,
 		# thats why everything is so jammed together here
-		
+
 		ml = ((number.magnitude // 1000) * 1000) * (ureg.ml)
 		ml = ml.to(ureg.l)
 		ml_rem = (number.magnitude % 1000)
 		proc_dict['ml'] = ml
-		
+
 		cup = ((((ml_rem * ureg.ml).to(ureg.cup)).magnitude // .25) \
 				 / 4) * ureg.cup
 		cup_rem = (((ml_rem * ureg.ml).to(ureg.cup)).magnitude % .25)
 		proc_dict['cup'] = cup
-		
+
 		little = ((cup_rem * ureg.cup).to(ureg.tbsp))
-		
+
 		if little.magnitude < 1:
 			little = little.to(ureg.tsp)
 		else:
 			pass
-		
+
 		proc_dict['little'] = round(little, 1)
 
 		proc_dict['processed_ml'] = round((ml + cup + little), 1)
-	
-	
+
+
 	if number.magnitude <= 60:
 		little = number.to(ureg.tbsp)
 		proc_dict['little'] = round(little, 1)
@@ -521,39 +521,39 @@ def little_units(number):
 		proc_dict['little'] = round(little, 1)
 
 		proc_dict['processed_ml'] = round(little, 1)
-			
+
 	pretty_list = []
 	for value in proc_dict.values():
 		if value.magnitude == 0:
 			pass
 		else:
 			pretty_list.append(str(value))
-			
+
 	del pretty_list[0:2]
-	
+
 	pretty_string = ' '.join([str(elem) for elem in pretty_list])
 
 	return pretty_string
 
 def make_printable(df):
-	
+
 	# If its an empty row
 	if pd.isnull(df['ingredient']):
 		df['pretty'] = np.nan
-		
+
 	# if its an ingredient unit that couldn't be converted to pint
 	if pd.isnull(df['pint_raw']) and pd.notnull(df['raw_unit']):
 		df['pretty'] = str(df['number']) + ' ' + str(df['raw_unit'])
-		
+
 	# if there's a mass
 	if pd.notnull(df['pint_mass']):
 		df['pretty'] = df['pint_mass']
-			
+
 	# if there's a volume but no mass
 	if pd.notnull(df['pint_volume']) and pd.isnull(df['pint_mass']):
 		x = little_units(df['pint_volume'])
 		df['pretty'] = x
-			
+
 	return df
 
 def get_printable(df):
@@ -608,7 +608,7 @@ def write_instructions(recipe_dict):
 		joined = ''.join(line)
 		wrapped = textwrap.wrap(joined, width=100)
 		wrapped_text.append(wrapped)
-	
+
 	with open(save_location, 'a') as o_target:
 		o_target.write('\n')
 		for paragraph in wrapped_text:
@@ -635,7 +635,7 @@ def write_working_csv(df, recipe_dict):
 	save_location = ('working_recipes/' + \
 					recipe_dict['name'] + '(working).csv')
 	df.to_csv(save_location, index = False)
-	
+
 def main():
 
 	if perform_updates == True:
@@ -650,6 +650,9 @@ def main():
 	# empty frames to collect missing info
 	missing_den = pd.DataFrame()
 	missing_prices = pd.DataFrame()
+
+	# recipes filepaths to print
+	to_print = []
 
 	for recipe in metadata_dict:
 
@@ -683,11 +686,13 @@ def main():
 
 		write_instructions(metadata_dict[recipe])
 
+		to_print.append(metadata_dict[recipe]['filepath'])
+
 	print (missing_den)
 
 	if win_system:
-		normalize_and_print.main(metadata_week['week'], print_ex = True)
-	
+		normalize_and_print.main(to_print, print_ex = True)
+
 
 if __name__ == '__main__':
 	main()

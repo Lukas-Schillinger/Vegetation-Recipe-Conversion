@@ -1,20 +1,16 @@
-import xlwings as xw 
+import xlwings as xw
 import os, time, csv, pathlib, shutil
 from openpyxl import Workbook
 
-def make_excel_sheets(current_week):
-	for recipe in (os.listdir('normalized_recipes\\' + current_week)):
+def make_excel_sheets(to_print):
+	for recipe in to_print:
 		path = pathlib.Path(recipe)
 		name = path.stem
-		
+
 		wb = Workbook()
 		ws = wb.active
 
-		with open((
-			'normalized_recipes\\' + \
-			current_week + \
-			'\\' + \
-			recipe), 'r') as f:
+		with open(recipe, 'r') as f:
 
 			for row in csv.reader(f):
 				ws.append(row)
@@ -64,17 +60,17 @@ def fix_column_width():
 
 		print (f'{recipe} is pretty now\n')
 
-	app.quit()	
+	app.quit()
 
 def print_to_printer():
-	for recipe in (os.listdir('working_excel')): 
+	for recipe in (os.listdir('working_excel')):
 		path = ('working_excel\\' + recipe)
 
 		print ('printing %s' % recipe)
 		os.startfile(path, 'print')
 		print ('%s sent to printer' % recipe)
 
-def main(current_week, print_ex = False):
+def main(to_print, print_ex = False):
 	print ('\ncreating temporary excel directory')
 	try:
 		os.mkdir('working_excel')
@@ -84,7 +80,7 @@ def main(current_week, print_ex = False):
 		pass
 
 	print ('\nconverting CSVs to excel sheets')
-	make_excel_sheets(current_week)
+	make_excel_sheets(to_print)
 	print ('conversions complete')
 
 	print ('\nmaking the recipes pretty\n')
@@ -100,7 +96,7 @@ def main(current_week, print_ex = False):
 		print ('print_ex set to false')
 
 	# excel processes need to close before working_excel can
-	# be removed. not really sure how to do this so the fix 
+	# be removed. not really sure how to do this so the fix
 	# for right now is making the program wait 10 seconds
 	# before trying to delete them.
 
