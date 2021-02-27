@@ -2,9 +2,9 @@ import xlwings as xw
 import os, time, csv, pathlib, shutil
 from openpyxl import Workbook
 
-def make_excel_sheets(to_print):
+def make_excel_sheets(dir, to_print):
 	for recipe in to_print:
-		path = pathlib.Path(recipe)
+		path = pathlib.Path(f'{dir}\{recipe}')
 		name = path.stem
 
 		wb = Workbook()
@@ -70,12 +70,12 @@ def print_to_printer():
 		os.startfile(path, 'print')
 		print ('%s sent to printer' % recipe)
 
-def main(to_print, print_ex = False):
+def main(to_print, dir, print_ex = False):
 
-	os.makedirs('working_excel')
+	os.makedirs('working_excel', exist_ok = True)
 
 	print ('\nconverting CSVs to excel sheets')
-	make_excel_sheets(to_print)
+	make_excel_sheets(dir, to_print)
 	print ('conversions complete')
 
 	print ('\nmaking the recipes pretty\n')
