@@ -71,13 +71,8 @@ def print_to_printer():
 		print ('%s sent to printer' % recipe)
 
 def main(to_print, print_ex = False):
-	print ('\ncreating temporary excel directory')
-	try:
-		os.mkdir('working_excel')
-		print ('directory created')
-	except OSError:
-		print ('directory already exists or an error occurred')
-		pass
+
+	os.makedirs('working_excel')
 
 	print ('\nconverting CSVs to excel sheets')
 	make_excel_sheets(to_print)
