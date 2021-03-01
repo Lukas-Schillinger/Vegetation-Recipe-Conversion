@@ -74,7 +74,6 @@ def choose_week(dir):
 		except (IndexError, ValueError) as e:
 			print (e, '\n')
 
-	#chosen_week_path = 'master_recipes/' + week_selection
 	chosen_week_path = f'{dir}\master_recipes\{week_selection}'
 	week_name = week_selection
 	return chosen_week_path, week_name
@@ -187,8 +186,6 @@ def get_metadata_dicts(dir):
 	return metadata_dict, metadata_week
 
 def create_normalized_directory(week_name, dir):
-
-	print (dir)
 	if os.path.isdir(f'{dir}\\normalized_recipes\{week_name}'):
 		print ('directory already exists for %s' % (week_name))
 	else:
