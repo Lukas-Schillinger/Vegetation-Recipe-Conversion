@@ -21,13 +21,13 @@ def title_format(sheet):
 	sheet.range('A1').api.Font.Size = 16
 	return sheet
 
-def add_borders(sheet, instruction_flag):
-	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(9).LineStyle = 1
-	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(7).LineStyle = 1
-	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(10).LineStyle = 1
-	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(8).LineStyle = 1
-	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(12).LineStyle = 1
-	sheet.range('A4:C{}'.format(instruction_flag-2)).api.Borders(11).LineStyle = 1
+def add_borders(sheet, end_numbers):
+	sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(9).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(7).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(10).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(8).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(12).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(11).LineStyle = 1
 	return sheet
 
 def fix_column_width():
@@ -40,20 +40,28 @@ def fix_column_width():
 		sheet = wb.sheets[0]
 
 		lrow = sheet.range('A' + str(sheet.cells.last_cell.row)).end('up').row
+		print (lrow)
 
-		instruction_flag = lrow + 2
-		for i in range(1, lrow - 1):
-			if 'Instruction' in str(sheet.range('A{}'.format(i)).value):
+
+		instruction_flag = None
+		for i in range(1, lrow):
+			if 'Instructions' in str(sheet.range('A{}'.format(i)).value):
 				instruction_flag = i
 
-		sheet.range('A1:A{}'.format(instruction_flag-1)).columns.autofit()
-		sheet.range('B1:B{}'.format(instruction_flag-1)).columns.autofit()
-		sheet.range('C1:C{}'.format(instruction_flag-1)).columns.autofit()
+		if instruction_flag:
+			sheet.range('A1:C{}'.format(instruction_flag)).columns.autofit()
+			sheet.range('A{}'.format(instruction_flag)).api.Font.Bold = True
+			end_numbers = instruction_flag
+		else:
+			sheet.autofit(axis='columns')
+			end_numbers = lrow
+
+		print (end_numbers)
+
 
 		# style options
 		sheet = title_format(sheet)
-		sheet = add_borders(sheet, instruction_flag)
-		sheet.range('A{}'.format(instruction_flag)).api.Font.Bold = True
+		sheet = add_borders(sheet, end_numbers)
 
 		wb.save('working_excel\\' + recipe)
 		wb.close()
