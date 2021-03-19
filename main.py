@@ -447,7 +447,7 @@ def set_recipe_to_servings(df, recipe_dict):
 			print ('invalid input')
 
 	multiple = desired_servings * (1 / float(servings))
-	df['number'] = df['number'] * multiple
+	df['number'] = df['number'].astype(float) * multiple
 
 def get_recipe_df(filepath):
 
