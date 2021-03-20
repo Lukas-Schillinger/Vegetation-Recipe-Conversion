@@ -2,7 +2,7 @@ number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
 4.8,gram,chili powder,,4.8 gram,7.742887739999997 milliliter,4.8 gram,
 18.0,gram,turmeric,,18.0 gram,29.57352956249999 milliliter,18.0 gram,
 2.8000000000000003,tsp,salt,,2.8000000000000003 teaspoon,13.800980462499997 milliliter,,
-0.32,cup,lime juice,,0.32 cup,75.70823567999999 milliliter,,
+0.32,cup,lime juice,,0.32 cup,75.70823567999999 milliliter,78.08000000000001 gram,
 520.0,gram,coconut flake,dry,520.0 gram,,520.0 gram,
 ,,,,,,,
 6000.0,gram,black rice,cooked,6000.0 gram,,6000.0 gram,

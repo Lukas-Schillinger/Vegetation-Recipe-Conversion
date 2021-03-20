@@ -16,8 +16,8 @@ if platform.system() != 'Linux':
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
 
-test_mode = False # skips selections to quickly fire through recipes
-perform_updates = False # updates prices and densities
+test_mode = True # skips selections to quickly fire through recipes
+perform_updates = True # updates prices and densities
 
 
 def find_working_folder():
@@ -31,6 +31,10 @@ def find_working_folder():
 
 	print ('select path')
 	while True:
+		if test_mode == True:
+			selection = possible_paths[1]
+			break
+
 		selection = input('>>>')
 		try:
 			if int(selection) in range(len(possible_paths)):
@@ -156,26 +160,30 @@ def get_metadata_dicts(dir):
 
 	metadata_dict = {}
 	for path in recipe_paths:
-		with open(path) as recipe_csv:
-			open_recipe = csv.reader(recipe_csv)
-			rows = list(open_recipe)
+		if path.endswith('.csv'):
+			with open(path) as recipe_csv:
+				open_recipe = csv.reader(recipe_csv)
+				rows = list(open_recipe)
 
-			name = rows[0][0]
-			servings = rows[1][0]
-			notes = rows[1][1]
+				name = rows[0][0]
+				servings = rows[1][0]
+				notes = rows[1][1]
 
-			metadata_entry = {
-				name : {
-					'name'             : name,
-					'week_name'        : week_name,
-					'filepath'         : path,
-					'norm_filepath'	   : f'{dir}\\normalized_recipes\{week_name}\{name} (normalized).csv',
-					'servings'         : servings,
-					'notes'            : notes,
-					'desired_servings' : None
+				metadata_entry = {
+					name : {
+						'name'             : name,
+						'week_name'        : week_name,
+						'filepath'         : path,
+						'norm_filepath'	   : f'{dir}\\normalized_recipes\{week_name}\{name} (normalized).csv',
+						'servings'         : servings,
+						'notes'            : notes,
+						'desired_servings' : None
+					}
 				}
-			}
-		metadata_dict.update(metadata_entry)
+			metadata_dict.update(metadata_entry)
+		else:
+			print (f"cannot open {path}")
+
 
 	metadata_dict = choose_all_or_one(metadata_dict)
 
@@ -637,9 +645,61 @@ def write_instructions(recipe_dict, dir):
 				for line in paragraph:
 					o_target.write(line + '\n')
 
+def get_prices(df, recipe_dict):
+	price_path = 'normalized_costs.csv'
+	price_frame = pd.read_csv(price_path)
+
+	prices = []
+	for index, row in df.iterrows():
+		price = np.nan
+
+		matches = price_frame.loc[price_frame['ingredient'] == row['ingredient']]
+		if len(matches) > 0:
+			#print (matches)
+
+			# temporary: I'm just taking the first match here
+			# everntually this needs to ask which price you want to use
+			match = matches.iloc[0]
+
+			price_mass = np.nan
+			price_volume = np.nan
+			price_special = np.nan
+
+			conversions = []
+			if pd.notnull(row['pint_mass']) and pd.notnull(match['cost_per_gram']):
+				price_mass = (row['pint_mass']).magnitude * match['cost_per_gram']
+				conversions.append(round(price_mass, 2))
+
+			if pd.notnull(row['pint_volume']) and pd.notnull(match['cost_per_ml']):
+				price_volume = (row['pint_volume']).magnitude * match['cost_per_ml']
+				conversions.append(round(price_volume, 2))
+
+			if row['raw_unit'] == match['special_unit']:
+				price_special = row['number'] * match['cost_per_s_unit']
+				conversions.append(round(price_special, 2))
+
+			for i in range(len(conversions)):
+				if i == (len(conversions) - 1):
+					pass
+				else:
+					if abs(conversions[i] - conversions[i + 1]) > .1:
+						print (f'error with {row["ingredient"]}')
+						print (f'{row["ingredient"]}\n{conversions}')
+
+			if conversions:
+				price = conversions[0]
+
+		prices.append(price)
+
+	df['prices'] = prices
+
+			#print (row['ingredient'])
+			#print (f'cost by mass: {price_mass}')
+			#print (f'cost by volume: {price_volume}')
+			#print (f'cost by special_unit: {price_special}')
+
 
 def write_working_csv(df, recipe_dict):
-
 	# Gives me access to the full dataframe to create test sets
 
 	if test_mode == True:
@@ -691,12 +751,13 @@ def main():
 
 		check_weird_unit(df)
 
-
 		missing_den = find_missing_densities(df, missing_den)
 
 		convert_to_metric(df)
 
 		write_working_csv(df, metadata_dict[recipe])
+
+		get_prices(df, metadata_dict[recipe])
 
 		round_everything(df)
 
@@ -711,8 +772,8 @@ def main():
 
 	print (missing_den)
 
-	if win_system:
-		normalize_and_print.main(to_print, dir, print_ex = False)
+	#if win_system:
+	#	normalize_and_print.main(to_print, dir, print_ex = False)
 
 
 if __name__ == '__main__':

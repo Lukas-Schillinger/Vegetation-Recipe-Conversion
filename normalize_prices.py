@@ -1,107 +1,153 @@
 import pandas as pd
 import numpy as np
 from pint import UnitRegistry
+import pint
 import time
 
 ureg = UnitRegistry()
 Q_ = ureg.Quantity
 
-def write_norm_price(row, number):
-	try:
-		number = number.magnitude
-	except AttributeError:
-		number = float(number)
-		
-	price = row['price'] * (1 / number)
-	
-	if pd.isnull(row['norm_price']):
-		price = price
-	else:
-		x = abs(float(row['norm_price']) - price)
-		if x > 0.10:
-			ingredient = row['ingredient']
-			print ('error:')
-			print (ingredient, 'price different by volume and mass')
-			print ('old price:', row['norm_price'])
-			print ('new price', price)
-		else:
-			price = price
-			
-	return price
+def cost_per_gram(df):
+    price_per_gram = []
+    for index, row in df.iterrows():
+        mass = row['mass']
+        price = row['price']
 
-def normalize_prices(cost_frame):
-	cost_frame['norm_price'] = np.nan
+        # default to not having a price/gram
+        normalized_price = np.nan
 
-	volume_list = []
-	mass_list = []
-	s_list = []
-	norm_price_list = []
+        try:
+            # these are the only real errors being checked for
+            mass = Q_(mass)
+            mass = mass.to(ureg.g)
 
-	for index, row in cost_frame.iterrows():
-		
-		volume = row['volume']
-		mass = row['mass']
-		s_ = row['s_unit']
-		
-		if pd.notnull(volume):
-			volume = Q_(volume)
-			volume = volume.to(ureg.ml)
-			
-			price = write_norm_price(row, volume)
-			
-			volume = round(((volume * (1 / volume)) * ureg.ml), 1)
-			volume_list.append(volume)
-		else:
-			volume = np.nan
-			volume_list.append(volume)
-		
-		if pd.notnull(mass):
-			mass = Q_(mass)
-			mass = mass.to(ureg.g)
-			
-			price = write_norm_price(row, mass)
-			
-			mass = round(((mass * (1 / mass)) * ureg.g), 1)
-			mass_list.append(mass)
-		else:
-			mass = np.nan
-			mass_list.append(mass)
-			
-		if pd.notnull(s_):
-			s_number, s_unit = s_.split(' ')
-			
-			
-			price = write_norm_price(row, int(s_number))
-			
-			s_number = round((int(s_number) * (1 / int(s_number))), 1)
-			s_number = str(s_number) + ' ' + str(s_unit)
-			s_list.append(s_number)
-		else:
-			s_number = np.nan
-			s_list.append(s_number)
-			
-		norm_price_list.append(price)
+            normalized_mass = 1 / mass.magnitude
+            normalized_price = price * normalized_mass
 
-	cost_frame['pint_volume'] = volume_list
-	cost_frame['pint_mass'] = mass_list
-	cost_frame['s_norm'] = s_list
-	cost_frame['norm_price'] = norm_price_list
+            #print (f"${normalized_price} per {normalized_mass}")
 
-	normalized_cost_frame = cost_frame[['ingredient', 
-									'pint_volume', 
-									'pint_mass', 
-									's_norm', 
-									'norm_price',
-									'notes']]
+        except AttributeError as e:
+            #print (f'incompatible mass format for {row["ingredient"]}')
+            pass
+            
+        # checks for np.nan values
+        except pint.errors.DimensionalityError as e:
+            #print (f'no mass for {row["ingredient"]}')
+            pass
 
-	return normalized_cost_frame
+        price_per_gram.append(normalized_price)
+
+    df['cost_per_gram'] = price_per_gram
+    return df
+
+def cost_per_ml(df):
+    price_per_ml = []
+    for index, row in df.iterrows():
+        volume = row['volume']
+        price = row['price']
+
+        normalized_price = np.nan
+
+        try:
+            # these are the only real errors being checked for
+            volume = Q_(volume)
+            volume = volume.to(ureg.ml)
+
+            normalized_volume = 1 / volume.magnitude
+            normalized_price = price * normalized_volume
+
+            #print (f"${normalized_price} per {normalized_volume}")
+
+        except AttributeError as e:
+            #print (f'incompatible volume format for {row["ingredient"]}')
+            pass
+
+        # checks for np.nan values
+        except pint.errors.DimensionalityError as e:
+            #print (f'no volume for {row["ingredient"]}')
+            pass
+
+        price_per_ml.append(normalized_price)
+
+    df['cost_per_ml'] = price_per_ml
+    return df
+
+def cost_per_s_unit(df):
+    price_per_s_units = []
+    s_units = []
+
+    for index, row in df.iterrows():
+        price = row['price']
+
+        normalized_price = np.nan
+        s_unit = np.nan
+
+        try:
+            s_number, s_unit = row['s_unit'].split(' ')
+
+            normalized_s_number = 1 / float(s_number)
+            normalized_price = price * normalized_s_number
+            #print (f'{normalized_price} per {s_unit} {row["ingredient"]}')
+
+        except AttributeError as e:
+            #print (f"no special unit for {row['ingredient']}")
+            pass
+
+        price_per_s_units.append(normalized_price)
+        s_units.append(s_unit)
+
+    df['cost_per_s_unit'] = price_per_s_units
+    df['special_unit'] = s_units
+    return df
+
+def check_conversions(df):
+    for index, row in df.iterrows():
+        price = row['price']
+
+        conversions = []
+
+        if pd.notnull(row['cost_per_gram']):
+            original_mass = (Q_(row['mass'])).to(ureg.g)
+            mass = (row['cost_per_gram']) * original_mass.magnitude
+            conversions.append(round(mass, 2))
+
+        if pd.notnull(row['cost_per_ml']):
+            original_volume = (Q_(row['volume'])).to(ureg.ml)
+            volume = (row['cost_per_ml']) * original_volume.magnitude
+            conversions.append(round(volume, 2))
+
+        if pd.notnull(row['cost_per_s_unit']):
+            original_s_number = float(row['s_unit'].split(' ')[0])
+            s_number = row['cost_per_s_unit'] * original_s_number
+            conversions.append(round(s_number, 2))
+
+        for i in range(len(conversions)):
+            if i == (len(conversions) - 1):
+                pass
+            else:
+                if abs(conversions[i] - conversions[i + 1]) > .1:
+                    print (f'error with {row["ingredient"]}')
+                    print (f'{row["ingredient"]}\n{conversions}')
+
 
 def main():
-	cost_frame = pd.read_csv('master_costs.csv')
-	normalized_frame = normalize_prices(cost_frame)
-	cost_frame.to_csv('normalized_costs.csv', index = False)
+    master_costs = 'master_costs.csv'
+    df_costs = pd.read_csv(master_costs)
 
-	print ('prices updated from master_costs.csv')
+    df_costs = cost_per_gram(df_costs)
+    df_costs = cost_per_ml(df_costs)
+    df_costs = cost_per_s_unit(df_costs)
+
+    check_conversions(df_costs)
+
+    df_finished = df_costs[['ingredient',
+                            'cost_per_gram',
+                            'cost_per_ml',
+                            'cost_per_s_unit',
+                            'special_unit',
+                            'notes']]
+
+    df_finished.to_csv('normalized_costs.csv', index=False)
 
 if __name__ == '__main__':
-	main()
+    main()

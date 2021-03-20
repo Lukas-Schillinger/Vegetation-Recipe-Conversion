@@ -1,54 +1,54 @@
-ingredient,volume,mass,s_unit,price,notes,norm_price,pint_volume,pint_mass,s_norm
-maple syrup,1 liter,,,12.49,"costco, organic",0.012489999999999998,1.0 milliliter,,
-almond butter,,765 g,,13.99,"costco, organic",0.018287581699346404,,1.0 gram,
-peanut butter,,1.59 kg,,11.49,"costco, organic",0.007226415094339623,,1.0 gram,
-black bean,,,8 can,6.99,"costco, S&W, organic, 664511",0.87375,,,1.0 can
-tomato paste,,2.04 kg,,7.49,"costco, organic",0.0036715686274509805,,1.0 gram,
-turmeric,,680 g,,16.99,costco,0.024985294117647057,,1.0 gram,
-cumin,,396 g,,6.49,"costco, McCormick",0.01638888888888889,,1.0 gram,
-italian seasoning,,117 g,,4.99,"costco, McCormick",0.042649572649572656,,1.0 gram,
-salt,,850 g,,2.99,costco,0.0035176470588235294,,1.0 gram,
-grapeseed oil,2 L,,,8.92,"costco, Ottavio",0.004459999999999999,1.0 milliliter,,
-cashew,,1.13 kg,,16.99,"costco, organic, 1014381",0.015035398230088494,,1.0 gram,
-almond,,1.36 kg,,12.79,costco,0.009404411764705882,,1.0 gram,
-pecan,,908 g,,13.49,costco,0.0148568281938326,,1.0 gram,
-walnut,,3 lbs,,12.99,costco,0.009546015952605198,,1.0 gram,
-cashew,,1.13 kg,,15.99,costco,0.014150442477876106,,1.0 gram,
-almond butter,,765 g,,6.69,"costco, 859695",0.008745098039215686,,1.0 gram,
-bell pepper,,,6 piece,5.99,"costco, 60357",0.9983333333333333,,,1.0 piece
-tomato,,4 lb,,5.29,"costco, 21020",0.0029156134173950053,,1.0 gram,
-limes,,5 lb,,4.59,"costco, 81393",0.0020238435668571758,,1.0 gram,
-yellow onion,,10 lb,,4.89,"costco, 67245",0.001078060462084051,,1.0 gram,
-vegetable broth,,7256 g,,9.99,"costco, organic, 1083709",0.0013767916207276737,,1.0 gram,
-mushroom,,24 oz,,3.49,"costco, 19813",0.005129421966834817,,1.0 gram,
-carrot,,5 lb,,4.49,"costco, 6984",0.0019797511144202004,,1.0 gram,
-lemon,,5 lbs,,5.99,"costco, 83345",0.002641137900974833,,1.0 gram,
-garbanzo bean,,,8 can,6.99,"costco, 694682",0.87375,,,1.0 can
-caper,,595 g,,6.59,"costco, 1261769",0.011075630252100841,,1.0 gram,
-garlic,,1.36 kg,,8.99,"costco, organic, 1467233",0.006610294117647059,,1.0 gram,
-baby spinach,,1 lb,,4.99,"costco, organic, 96716",0.01100106688302539,,1.0 gram,
-almond flour,,3 lb,,11.99,"costco, 1178969",0.008811141745322272,,1.0 gram,
-spring  mix,,1 lb,,3.89,"costco, 48757",0.008575981998991736,,1.0 gram,
-cucumber,,,3 piece,2.59,"costco, 88426",0.8633333333333333,,,1.0 piece
-ginger root,,1 lb,,3.99,sprouts,0.008796444261176614,,1.0 gram,
-zucchini,,1 lb,,1.29,sprouts,0.0028439631821849205,,1.0 gram,
-jalapeno,,,5 piece,1.0,sprouts,0.2,,,1.0 piece
-sweet potato,,1 lb,,0.68,sprouts,0.0014991433828571675,,1.0 gram,
-plantain,,,1 piece,0.59,sprouts,0.59,,,1.0 piece
-white onion,,1 lb,,0.88,sprouts,0.0019400679072269225,,1.0 gram,
-tomato sauce,,226 g,1 can,0.79,sprouts,0.79,,1.0 gram,1.0 can
-crushed tomato,,794 g,1 can,1.59,sprouts,1.59,,1.0 gram,1.0 can
-Manzanilla Olive,,75 g,,2.49,sprouts,0.03320000000000001,,1.0 gram,
-coconut milk,400 ml,,1 can,1.99,"sprouts, organic, lite, canned",1.99,1.0 milliliter,,1.0 can
-garbanzo bean,,,1 can,1.25,"sprouts, low sodium",1.25,,,1.0 can
-jackfruit,,,1 piece,2.49,"sprouts, organic, green",2.49,,,1.0 piece
-great northern bean,,,3 can,3.75,"sprouts, organic",1.25,,,1.0 can
-oat flour,,453 g,,2.79,"sprouts, organic",0.006158940397350993,,1.0 gram,
-apple sauce,,680 g,,2.49,"sprouts, organic",0.003661764705882353,,1.0 gram,
-spiral pasta,,16 oz,,3.99,"sprouts, brown rice pasta",0.008796444261176614,,1.0 gram,
-black bean,,,1 can,0.99,sprouts,0.99,,,1.0 can
-miso,,397 g,,3.99,"sprouts, white",0.010050377833753149,,1.0 gram,
-lentil,,1 lb,,2.49,"sprouts, organic, green",0.0054895103284034515,,1.0 gram,
-sunflower seed,,1 lb,,3.29,"sprouts, raw",0.007253208425882471,,1.0 gram,
-corn,,454 g,,1.99,"sprouts, frozen",0.004383259911894273,,1.0 gram,
-maple syrup,946 ml,1296.02 g,,18.99,"sprouts, organic",0.014652551658153422,1.0 milliliter,1.0 gram,
+ingredient,cost_per_gram,cost_per_ml,cost_per_s_unit,special_unit,notes
+maple syrup,,0.012489999999999998,,,"costco, organic"
+almond butter,0.018287581699346404,,,,"costco, organic"
+peanut butter,0.007226415094339623,,,,"costco, organic"
+black bean,,,0.87375,can,"costco, S&W, organic, 664511"
+tomato paste,0.0036715686274509805,,,,"costco, organic"
+turmeric,0.024985294117647057,,,,costco
+cumin,0.01638888888888889,,,,"costco, McCormick"
+italian seasoning,0.042649572649572656,,,,"costco, McCormick"
+salt,0.0035176470588235294,,,,costco
+grapeseed oil,,0.004459999999999999,,,"costco, Ottavio"
+cashew,0.015035398230088494,,,,"costco, organic, 1014381"
+almond,0.009404411764705882,,,,costco
+pecan,0.0148568281938326,,,,costco
+walnut,0.009546015952605198,,,,costco
+cashew,0.014150442477876106,,,,costco
+almond butter,0.008745098039215686,,,,"costco, 859695"
+bell pepper,,,0.9983333333333333,piece,"costco, 60357"
+tomato,0.0029156134173950053,,,,"costco, 21020"
+limes,0.0020238435668571758,,,,"costco, 81393"
+yellow onion,0.001078060462084051,,,,"costco, 67245"
+vegetable broth,0.0013767916207276737,,,,"costco, organic, 1083709"
+mushroom,0.005129421966834817,,,,"costco, 19813"
+carrot,0.0019797511144202004,,,,"costco, 6984"
+lemon,0.002641137900974833,,,,"costco, 83345"
+garbanzo bean,,,0.87375,can,"costco, 694682"
+caper,0.011075630252100841,,,,"costco, 1261769"
+garlic,0.006610294117647059,,,,"costco, organic, 1467233"
+baby spinach,0.01100106688302539,,,,"costco, organic, 96716"
+almond flour,0.008811141745322272,,,,"costco, 1178969"
+spring  mix,0.008575981998991736,,,,"costco, 48757"
+cucumber,,,0.8633333333333333,piece,"costco, 88426"
+ginger root,0.008796444261176614,,,,sprouts
+zucchini,0.0028439631821849205,,,,sprouts
+jalapeno,,,0.2,piece,sprouts
+sweet potato,0.0014991433828571675,,,,sprouts
+plantain,,,0.59,piece,sprouts
+white onion,0.0019400679072269225,,,,sprouts
+tomato sauce,0.003495575221238938,,0.79,can,sprouts
+crushed tomato,0.0020025188916876573,,1.59,can,sprouts
+Manzanilla Olive,0.03320000000000001,,,,sprouts
+coconut milk,,0.004975,1.99,can,"sprouts, organic, lite, canned"
+garbanzo bean,,,1.25,can,"sprouts, low sodium"
+jackfruit,,,2.49,piece,"sprouts, organic, green"
+great northern bean,,,1.25,can,"sprouts, organic"
+oat flour,0.006158940397350993,,,,"sprouts, organic"
+apple sauce,0.003661764705882353,,,,"sprouts, organic"
+spiral pasta,0.008796444261176614,,,,"sprouts, brown rice pasta"
+black bean,,,0.99,can,sprouts
+miso,0.010050377833753149,,,,"sprouts, white"
+lentil,0.0054895103284034515,,,,"sprouts, organic, green"
+sunflower seed,0.007253208425882471,,,,"sprouts, raw"
+corn,0.004383259911894273,,,,"sprouts, frozen"
+maple syrup,0.014652551658153422,0.02007399577167019,,,"sprouts, organic"
