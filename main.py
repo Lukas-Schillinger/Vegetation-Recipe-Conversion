@@ -16,7 +16,7 @@ if platform.system() != 'Linux':
 warnings.filterwarnings('ignore')
 ureg = UnitRegistry()
 
-test_mode = True # skips selections to quickly fire through recipes
+test_mode = False # skips selections to quickly fire through recipes
 perform_updates = True # updates prices and densities
 
 
@@ -30,11 +30,8 @@ def find_working_folder():
 	for i in range(len(possible_paths)): print (f'[{i}] {possible_paths[i]}')
 
 	print ('select path')
-	while True:
-		if test_mode == True:
-			selection = possible_paths[1]
-			break
-
+	selection = possible_paths[1]
+	while test_mode == False:
 		selection = input('>>>')
 		try:
 			if int(selection) in range(len(possible_paths)):
@@ -52,7 +49,6 @@ def choose_week(dir):
 	# choose which week's recipes to normalize
 	# skipped if test_mode is True
 
-	week_folder = os.listdir('master_recipes')
 	if not os.path.isdir(f'{dir}\master_recipes'):
 		os.mkdir(f'{dir}\master_recipes')
 
@@ -61,16 +57,14 @@ def choose_week(dir):
 	count = 0
 	numbered_weeks = []
 
-	for week in week_folder:
-		numbered_week = '[' + str(count) + ']' + ' ' + week
+	for i in range(len(week_folder)):
+		numbered_week = f'[{i}] {week_folder[i]}'
 		numbered_weeks.append(numbered_week)
-		count += 1
 
 	print (*numbered_weeks, sep = '\n')
+
 	print ('input number week')
-
 	week_selection = week_folder[0] #                         TEST CHECK
-
 	while test_mode == False: #                               TEST CHECK
 		try:
 			week_selection = week_folder[int(input('>'))]
@@ -110,7 +104,7 @@ def choose_all_or_one(metadata_dict):
 		count = 0
 		listed_recipes = []
 		for recipe in metadata_dict:
-			print  ('[' + str(count) + ']' + ' ' + recipe)
+			print (f'[{count}] {recipe}')
 			listed_recipes.append(recipe)
 			count += 1
 
@@ -174,7 +168,7 @@ def get_metadata_dicts(dir):
 						'name'             : name,
 						'week_name'        : week_name,
 						'filepath'         : path,
-						'norm_filepath'	   : f'{dir}\\normalized_recipes\{week_name}\{name} (normalized).csv',
+						'norm_filepath'	   : f'{dir}\\normalized_recipes\\{week_name}\\{name} (normalized).csv',
 						'servings'         : servings,
 						'notes'            : notes,
 						'desired_servings' : None
@@ -195,10 +189,9 @@ def get_metadata_dicts(dir):
 
 def create_normalized_directory(week_name, dir):
 	if os.path.isdir(f'{dir}\\normalized_recipes\{week_name}'):
-		print ('directory already exists for %s' % (week_name))
+		pass
 	else:
 		os.makedirs(f'{dir}\\normalized_recipes\{week_name}')
-		print ('directory created for %s' % (week_name))
 
 def try_pint(df):
 
@@ -208,15 +201,15 @@ def try_pint(df):
 	# it goes than fill in [volume] and [mass] in one mega function
 
 	pint_list = []
-	for i in range(len(df)):
-		x = df.loc[i]
-		unit = x['raw_unit']
-		number = x['number']
+	for index, row in df.iterrows():
+		unit = row['raw_unit']
+		number = row['number']
 
+		pint_raw = np.nan
 		try:
 			pint_raw = number * ureg(unit)
 		except AttributeError:
-			pint_raw = np.nan
+			pass
 
 		pint_list.append(pint_raw)
 
@@ -224,17 +217,12 @@ def try_pint(df):
 
 def try_volume(df): # fill in the [volume] column
 	volume_list = []
-	for i in range(len(df)):
-		x = df.loc[i]
+	for index, row in df.iterrows():
+		pint_volume = np.nan
 
-		try:
-			if x['pint_raw'].dimensionality == '[length] ** 3':
-				pint_volume = (x['pint_raw'])
-			else:
-				pint_volume = np.nan
-
-		except AttributeError:
-			pint_volume = np.nan
+		if pd.notnull(row['pint_raw']):
+			if row['pint_raw'].dimensionality == '[length] ** 3':
+				pint_volume = row['pint_raw']
 
 		volume_list.append(pint_volume)
 
@@ -242,17 +230,12 @@ def try_volume(df): # fill in the [volume] column
 
 def try_mass(df): # fill in the [mass] column
 	mass_list = []
-	for i in range(len(df)):
-		x = df.loc[i]
+	for index, row in df.iterrows():
+		pint_mass = np.nan
 
-		try:
-			if x['pint_raw'].dimensionality == '[mass]':
-				pint_mass = x['pint_raw']
-			else:
-				pint_mass = np.nan
-
-		except AttributeError:
-			pint_mass = np.nan
+		if pd.notnull(row['pint_raw']):
+			if row['pint_raw'].dimensionality == '[mass]':
+				pint_mass = row['pint_raw']
 
 		mass_list.append(pint_mass)
 
@@ -263,31 +246,21 @@ def volume_to_mass(df):
 	# takes the volume, finds if there's a density entry for that
 	# ingredient, and fills in a mass
 
-	# this needs to be redone with the same DataFrame.loc method used
-	# in apply_weird_unit()
-
 	density_frame = pd.read_csv('normalized_densities.csv')
 
 	mass_list = []
-	for i in range(len(df)):
-		ready_for_conversion = False
-		x = df.loc[i]
+	for index, row in df.iterrows():
+		pint_mass = row['pint_mass']
+		if pd.notnull(row['pint_volume']) and pd.isnull(row['pint_mass']):
+			matches = density_frame.loc[density_frame['ingredient'] == row['ingredient']]
 
-		if pd.isnull(x['pint_mass']) and pd.notnull(x['pint_volume']):
-			pint_mass = x['pint_mass']
-			ready_for_conversion = True
+			# temporary: eventually this should be able to handle multiple
+			# density matches
 
-		else:
-			pint_mass = x['pint_mass']
-
-		if ready_for_conversion == True:
-			for i in range(len(density_frame)):
-				y = density_frame.loc[i]
-
-				if y['ingredient'] == x['ingredient']:
-
-					density = ureg(y['density'])
-					pint_mass = density * x['pint_volume']
+			if len(matches) > 0:
+				match = matches.iloc[0]
+				density = ureg(match['density'])
+				pint_mass = row['pint_volume'] * density
 
 		mass_list.append(pint_mass)
 
@@ -297,31 +270,21 @@ def mass_to_volume(df):
 
 	# does the opposite of the volume_to_mass() function
 
-	# this needs to be redone with the same DataFrame.loc method used
-	# in apply_weird_unit()
-
 	density_frame = pd.read_csv('normalized_densities.csv')
 
 	volume_list = []
-	for i in range(len(df)):
-		ready_for_conversion = False
-		x = df.loc[i]
+	for index, row in df.iterrows():
+		pint_volume = row['pint_volume']
+		if pd.notnull(row['pint_mass']) and pd.isnull(row['pint_volume']):
+			matches = density_frame.loc[density_frame['ingredient'] == row['ingredient']]
 
-		if pd.isnull(x['pint_volume']) and pd.notnull(x['pint_mass']):
-			pint_volume = x['pint_volume']
-			ready_for_conversion = True
+			# temporary: eventually this should be able to handle multiple
+			# density matches
 
-		else:
-			pint_volume = x['pint_volume']
-
-		if ready_for_conversion == True:
-			for i in range(len(density_frame)):
-				y = density_frame.loc[i]
-
-				if y['ingredient'] == x['ingredient']:
-
-					density = ureg(y['density'])
-					pint_volume = (1 / density) * x['pint_mass']
+			if len(matches) > 0:
+				match = matches.iloc[0]
+				density = ureg(match['density'])
+				pint_volume = (1 / density) * row['pint_mass']
 
 		volume_list.append(pint_volume)
 
@@ -386,27 +349,20 @@ def convert_to_metric(df):
 	# converts pint_mass and pint_volume to g and ml so other
 	# functions don't need to constantly redo this
 
-	# this function reassigns the entire row because iterrows()
-	# creates a copy of the row and it was easier to do this
-	# than assign each conversion by index.
-
 	volume_list = []
 	mass_list = []
 
 	for index, row in df.iterrows():
-		if pd.notnull(row['pint_volume']):
-			ml_volume = row['pint_volume'].to(ureg.ml)
-			volume_list.append(ml_volume)
-		else:
-			ml_volume = np.nan
-			volume_list.append(ml_volume)
+		ml_volume = np.nan
+		g_mass = np.nan
 
+		if pd.notnull(row['pint_volume']):
+			ml_volume = (row['pint_volume']).to(ureg.ml)
 		if pd.notnull(row['pint_mass']):
-			g_mass = row['pint_mass'].to(ureg.gram)
-			mass_list.append(g_mass)
-		else:
-			g_mass = np.nan
-			mass_list.append(g_mass)
+			g_mass = (row['pint_mass']).to(ureg.g)
+
+		volume_list.append(ml_volume)
+		mass_list.append(g_mass)
 
 	df['pint_volume'] = volume_list
 	df['pint_mass'] = mass_list
@@ -479,7 +435,6 @@ def get_recipe_df(filepath):
 	df['pint_raw'] = np.nan
 	df['pint_volume'] = np.nan
 	df['pint_mass'] = np.nan
-	df['price'] = np.nan
 
 	return df
 
@@ -505,6 +460,7 @@ def find_missing_densities(df, missing_den):
 	return y
 
 def little_units(number):
+	# called by make_printable() if the ideal number to print is in volume
 
 	# takes something like '2378 ml' and converts it into a more user
 	# friendly format like 'X liters, X cups, X tablespoons'
@@ -574,6 +530,7 @@ def little_units(number):
 	return pretty_string
 
 def make_printable(df):
+	# creates a number + unit combined string to make the recipe easier to read
 
 	# If its an empty row
 	if pd.isnull(df['ingredient']):
@@ -581,7 +538,7 @@ def make_printable(df):
 
 	# if its an ingredient unit that couldn't be converted to pint
 	if pd.isnull(df['pint_raw']) and pd.notnull(df['raw_unit']):
-		df['pretty'] = str(df['number']) + ' ' + str(df['raw_unit'])
+		df['pretty'] = f"{df['number']} {df['raw_unit']}"
 
 	# if there's a mass
 	if pd.notnull(df['pint_mass']):
@@ -691,7 +648,7 @@ def get_prices(df, recipe_dict):
 
 		prices.append(price)
 
-	df['prices'] = prices
+	df['price'] = prices
 
 			#print (row['ingredient'])
 			#print (f'cost by mass: {price_mass}')
@@ -768,12 +725,11 @@ def main():
 		write_instructions(metadata_dict[recipe], dir)
 
 		to_print.append(metadata_dict[recipe]['norm_filepath'])
-		print (metadata_dict[recipe]['filepath'])
 
-	print (missing_den)
+	print (f'Missing Densities: \n{missing_den}')
 
-	#if win_system:
-	#	normalize_and_print.main(to_print, dir, print_ex = False)
+	if win_system:
+		normalize_and_print.main(to_print, dir, print_ex = False)
 
 
 if __name__ == '__main__':
