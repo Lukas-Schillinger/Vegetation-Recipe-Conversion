@@ -729,7 +729,7 @@ def main():
 	print (f'Missing Densities: \n{missing_den}')
 
 	if win_system:
-		normalize_and_print.main(to_print, dir, print_ex = False)
+		normalize_and_print.main(to_print, dir, print_ex = True)
 
 
 if __name__ == '__main__':

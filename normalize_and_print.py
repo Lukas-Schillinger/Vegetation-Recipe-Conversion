@@ -23,19 +23,15 @@ def title_format(sheet):
 
 def add_borders(sheet, end_numbers, instruction_flag):
 	if instruction_flag:
-		sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(9).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(7).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(10).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(8).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(12).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers-2)).api.Borders(11).LineStyle = 1
-	else:
-		sheet.range('A4:C{}'.format(end_numbers)).api.Borders(9).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers)).api.Borders(7).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers)).api.Borders(10).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers)).api.Borders(8).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers)).api.Borders(12).LineStyle = 1
-		sheet.range('A4:C{}'.format(end_numbers)).api.Borders(11).LineStyle = 1
+		end_numbers = end_numbers-2
+
+	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(9).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(7).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(10).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(8).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(12).LineStyle = 1
+	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(11).LineStyle = 1
+	
 	return sheet
 
 def fix_column_width():

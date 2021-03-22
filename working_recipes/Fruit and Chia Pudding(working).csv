@@ -1,11 +1,11 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-64.0,oz,strawberry,chopped,64.0 ounce,,1814.3694800000003 gram,
-5.333333333333333,piece,mango,chopped,,,,
-24.0,oz,blackberry,,24.0 ounce,,680.3885550000001 gram,
-,,,,,,,
-85.33333333333333,oz,strawberry,pureed,85.33333333333333 ounce,,2419.159306666667 gram,
-30.0,cup,milk,,30.0 cup,7097.647094999998 milliliter,,
-120.0,tbsp,chia seed,,120.0 tablespoon,1774.4117737499996 milliliter,1375.0 gram,
-,,,,,,,
-41.33333333333333,tbsp,maple syrup,,41.33333333333333 tablespoon,611.1862776249998 milliliter,837.3252003462497 gram,
-62.0,tsp,vanilla extract,,62.0 teaspoon,305.5931388124999 milliliter,308.64907020062486 gram,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+49.599999999999994,oz,strawberry,chopped,49.599999999999994 ounce,,1406.1363470000001 gram
+4.133333333333333,piece,mango,chopped,,,
+18.599999999999998,oz,blackberry,,18.599999999999998 ounce,,527.301130125 gram
+,,,,,,
+66.13333333333333,oz,strawberry,pureed,66.13333333333333 ounce,,1874.8484626666668 gram
+23.249999999999996,cup,milk,,23.249999999999996 cup,5500.676498624997 milliliter,
+92.99999999999999,tbsp,chia seed,,92.99999999999999 tablespoon,1375.1691246562493 milliliter,1065.6249999999998 gram
+,,,,,,
+32.03333333333333,tbsp,maple syrup,,32.03333333333333 tablespoon,473.6693651593748 milliliter,648.9270302683435 gram
+48.05,tsp,vanilla extract,,48.05 teaspoon,236.8346825796874 milliliter,239.20302940548427 gram

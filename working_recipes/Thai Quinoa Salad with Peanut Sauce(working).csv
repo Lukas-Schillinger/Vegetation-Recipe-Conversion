@@ -1,18 +1,18 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-8.0,cup,quinoa,,8.0 cup,1892.7058919999995 milliliter,1600.0 gram,
-15.0,cup,red cabbage,shredded,15.0 cup,3548.823547499999 milliliter,,
-10.0,piece,carrot,chopped,,,,
-10.0,piece,bell pepper,,,,,
-20.0,piece,green onion,,,,,
-4.0,cup,cilantro,,4.0 cup,946.3529459999997 milliliter,160.0 gram,
-5.0,cup,cashew,roasted,5.0 cup,1182.9411824999997 milliliter,767.5 gram,
-4.0,cup,edamame,,4.0 cup,946.3529459999997 milliliter,,
-4.0,cup,cucumber,chopped,4.0 cup,946.3529459999997 milliliter,,
-4.0,cup,broccoli,,4.0 cup,946.3529459999997 milliliter,,
-,,,,,,,
-1200.0,gram,kale,shredded,1200.0 gram,,1200.0 gram,
-800.0,gram,red cabbage,shredded,800.0 gram,,800.0 gram,
-600.0,gram,carrot,shredded,600.0 gram,,600.0 gram,
-40.0,ml,peanut sauce,,40.0 milliliter,40.0 milliliter,,
-,,,,,,,
-40.0,piece,peanut sauce,4 oz container,,,,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+5.4,cup,quinoa,,5.4 cup,1277.5764770999997 milliliter,1080.0 gram
+10.125,cup,red cabbage,shredded,10.125 cup,2395.4558945624995 milliliter,
+6.75,piece,carrot,chopped,,,
+6.75,piece,bell pepper,,,,
+13.5,piece,green onion,,,,
+2.7,cup,cilantro,,2.7 cup,638.7882385499998 milliliter,108.00000000000001 gram
+3.375,cup,cashew,roasted,3.375 cup,798.4852981874998 milliliter,518.0625 gram
+2.7,cup,edamame,,2.7 cup,638.7882385499998 milliliter,
+2.7,cup,cucumber,chopped,2.7 cup,638.7882385499998 milliliter,
+2.7,cup,broccoli,,2.7 cup,638.7882385499998 milliliter,
+,,,,,,
+810.0,gram,kale,shredded,810.0 gram,,810.0 gram
+540.0,gram,red cabbage,shredded,540.0 gram,,540.0 gram
+405.0,gram,carrot,shredded,405.0 gram,,405.0 gram
+27.0,ml,peanut sauce,,27.0 milliliter,27.0 milliliter,
+,,,,,,
+27.0,piece,peanut sauce,4 oz container,,,

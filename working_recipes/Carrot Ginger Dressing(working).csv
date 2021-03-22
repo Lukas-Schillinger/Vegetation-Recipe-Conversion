@@ -1,8 +1,8 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-17.5,cup,carrot,cut into rounds,17.5 cup,4140.294138749999 milliliter,,
-10.0,piece,shallot,,,,,
-750.0,ml,rice vinegar,,750.0 milliliter,750.0 milliliter,873.8694695673429 gram,
-20.0,tbsp,ginger,peeled and minced,20.0 tablespoon,295.73529562499994 milliliter,133.96245413375843 gram,
-15.0,tbsp,miso paste,,15.0 tablespoon,221.80147171874995 milliliter,,
-3.3000000000000003,cup,water,,3.3000000000000003 cup,780.7411804499999 milliliter,780.7411804499999 gram,
-2.5,tsp,salt,,2.5 teaspoon,12.322303984374996 milliliter,,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+11.8125,cup,carrot,cut into rounds,11.8125 cup,2794.698543656249 milliliter,
+6.75,piece,shallot,,,,
+506.25,ml,rice vinegar,,506.25 milliliter,506.25 milliliter,589.8618919579565 gram
+13.5,tbsp,ginger,peeled and minced,13.5 tablespoon,199.62132454687494 milliliter,90.42465654028695 gram
+10.125,tbsp,miso paste,,10.125 tablespoon,149.71599341015622 milliliter,212.625 gram
+2.2275,cup,water,,2.2275 cup,527.0002968037498 milliliter,527.0002968037498 gram
+1.6875,tsp,salt,,1.6875 teaspoon,8.317555189453122 milliliter,

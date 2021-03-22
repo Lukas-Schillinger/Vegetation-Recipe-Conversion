@@ -1,28 +1,28 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-4.8,gram,chili powder,,4.8 gram,7.742887739999997 milliliter,4.8 gram,
-18.0,gram,turmeric,,18.0 gram,29.57352956249999 milliliter,18.0 gram,
-2.8000000000000003,tsp,salt,,2.8000000000000003 teaspoon,13.800980462499997 milliliter,,
-0.32,cup,lime juice,,0.32 cup,75.70823567999999 milliliter,78.08000000000001 gram,
-520.0,gram,coconut flake,dry,520.0 gram,,520.0 gram,
-,,,,,,,
-6000.0,gram,black rice,cooked,6000.0 gram,,6000.0 gram,
-,,,,,,,
-1600.0,gram,mushroom,,1600.0 gram,,1600.0 gram,
-80.0,gram,liquid amino,,80.0 gram,69.58477544117645 milliliter,80.0 gram,
-8.8,gram,nutritional yeast,,8.8 gram,34.69960801999999 milliliter,8.8 gram,
-,,,,,,,
-4.8,block,extra firm tofu,,,,,
-160.0,gram,sriracha,,160.0 gram,139.1695508823529 milliliter,160.0 gram,
-160.0,gram,liquid amino,,160.0 gram,139.1695508823529 milliliter,160.0 gram,
-25.6,gram,garlic powder,,25.6 gram,47.31764729999999 milliliter,25.6 gram,
-,,,,,,,
-1600.0,gram,cucumber,mandolined,1600.0 gram,,1600.0 gram,
-1200.0,gram,bell pepper,strips,1200.0 gram,,1200.0 gram,
-800.0,gram,red cabbage,food processed,800.0 gram,,800.0 gram,
-600.0,gram,radish,sliced,600.0 gram,,600.0 gram,
-1200.0,gram,mango,sliced,1200.0 gram,,1200.0 gram,
-1200.0,gram,carrot,mandolined,1200.0 gram,,1200.0 gram,
-1200.0,gram,edamame,,1200.0 gram,,1200.0 gram,
-,,,,,,,
-,,green onion,,,,,
-,,sesame seed,,,,,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+2.52,gram,chili powder,,2.52 gram,4.065016063499999 milliliter,2.52 gram
+9.450000000000001,gram,turmeric,,9.450000000000001 gram,15.526103020312496 milliliter,9.450000000000001 gram
+1.4700000000000002,tsp,salt,,1.4700000000000002 teaspoon,7.245514742812499 milliliter,
+0.168,cup,lime juice,,0.168 cup,39.74682373199999 milliliter,40.99200000000001 gram
+273.0,gram,coconut flake,dry,273.0 gram,,273.0 gram
+,,,,,,
+3150.0,gram,black rice,cooked,3150.0 gram,,3150.0 gram
+,,,,,,
+840.0,gram,mushroom,,840.0 gram,,840.0 gram
+42.0,gram,liquid amino,,42.0 gram,36.53200710661764 milliliter,42.0 gram
+4.62,gram,nutritional yeast,,4.62 gram,18.217294210499993 milliliter,4.62 gram
+,,,,,,
+2.52,block,extra firm tofu,,,,
+84.0,gram,sriracha,,84.0 gram,73.06401421323528 milliliter,84.0 gram
+84.0,gram,liquid amino,,84.0 gram,73.06401421323528 milliliter,84.0 gram
+13.44,gram,garlic powder,,13.44 gram,24.841764832499994 milliliter,13.44 gram
+,,,,,,
+840.0,gram,cucumber,mandolined,840.0 gram,,840.0 gram
+630.0,gram,bell pepper,strips,630.0 gram,,630.0 gram
+420.0,gram,red cabbage,food processed,420.0 gram,,420.0 gram
+315.0,gram,radish,sliced,315.0 gram,,315.0 gram
+630.0,gram,mango,sliced,630.0 gram,,630.0 gram
+630.0,gram,carrot,mandolined,630.0 gram,,630.0 gram
+630.0,gram,edamame,,630.0 gram,,630.0 gram
+,,,,,,
+,,green onion,,,,
+,,sesame seed,,,,

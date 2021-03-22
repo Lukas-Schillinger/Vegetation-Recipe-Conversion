@@ -1,14 +1,14 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-3000.0,g,polenta,,3000.0 gram,,3000.0 gram,
-4000.0,ml,coconut milk,"from can, full fat",4000.0 milliliter,4000.0 milliliter,3516.6583609916725 gram,
-6000.0,ml,vegetable broth,,6000.0 milliliter,6000.0 milliliter,4869.219269065393 gram,
-60.0,tbsp,nutritional yeast,,60.0 tablespoon,887.2058868749998 milliliter,225.00000000000003 gram,
-26.6,tbsp,coconut oil,,26.6 tablespoon,393.3279431812499 milliliter,372.40000000000003 gram,
-10.0,piece,onion,,,,1100.0 gram,
-5320.0,g,mushroom,sliced,5320.0 gram,,5320.0 gram,
-53.2,clove,garlic,,,,,
-26.6,tbsp,liquid amino,,26.6 tablespoon,393.3279431812499 milliliter,452.2 gram,
-53.2,cup,collard green,,53.2 cup,12586.494181799997 milliliter,,
-20.0,can,cannelini bean,,,,,
-,,salt,,,,,
-,,pepper,,,,,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+2325.0,g,polenta,,2325.0 gram,,2325.0 gram
+3100.0,ml,coconut milk,"from can, full fat",3100.0 milliliter,3100.0 milliliter,2725.4102297685463 gram
+4650.0,ml,vegetable broth,,4650.0 milliliter,4650.0 milliliter,3773.6449335256793 gram
+46.5,tbsp,nutritional yeast,,46.5 tablespoon,687.5845623281248 milliliter,174.37500000000003 gram
+20.615000000000002,tbsp,coconut oil,,20.615000000000002 tablespoon,304.8291559654687 milliliter,288.61 gram
+7.75,piece,onion,,,,852.5 gram
+4123.0,g,mushroom,sliced,4123.0 gram,,4123.0 gram
+41.230000000000004,clove,garlic,,,,
+20.615000000000002,tbsp,liquid amino,,20.615000000000002 tablespoon,304.8291559654687 milliliter,350.45500000000004 gram
+41.230000000000004,cup,collard green,,41.230000000000004 cup,9754.532990894999 milliliter,
+15.5,can,cannelini bean,,,,
+,,salt,,,,
+,,pepper,,,,
