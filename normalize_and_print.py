@@ -31,7 +31,7 @@ def add_borders(sheet, end_numbers, instruction_flag):
 	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(8).LineStyle = 1
 	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(12).LineStyle = 1
 	sheet.range('A4:C{}'.format(end_numbers)).api.Borders(11).LineStyle = 1
-	
+
 	return sheet
 
 def fix_column_width():
@@ -105,8 +105,12 @@ def main(to_print, dir, print_ex = False):
 	# maybe launch the print_to_printer() in a separate shell
 	# and proceed only when that process is closed?
 
-	shutil.rmtree('working_excel')
-	print ('\ntemporay excel directory deleted')
+	if print_ex == True:
+		shutil.rmtree('working_excel')
+		print ('\ntemporay excel directory deleted')
+	else:
+		pass 
+
 	print ('normalize_and_print complete')
 
 if __name__ == '__main__':
