@@ -168,8 +168,7 @@ def get_metadata_dicts(dir):
 
 	metadata_dict = choose_all_or_one(metadata_dict)
 
-	# meta_data week is used for normalize_and_print so it
-	# can find the correct week to print
+	# unused at the moment 
 	metadata_week = {'week' : week_name}
 
 	return metadata_dict, metadata_week
@@ -191,8 +190,8 @@ def try_pint(df):
 	for index, row in df.iterrows():
 		unit = row['raw_unit']
 		number = row['number']
-
 		pint_raw = np.nan
+
 		try:
 			pint_raw = number * ureg(unit)
 		except AttributeError:
@@ -686,8 +685,8 @@ def main():
 
 	create_normalized_directory(metadata_week['week'], dir)
 
-	# empty frames to collect missing info
-	#missing_den = pd.DataFrame()
+	# empty lists to collect missing info
+
 	missing_densities = []
 	missing_prices = []
 
