@@ -1,19 +1,19 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-20.0,piece,red onion,thinly sliced,,,,
-10.0,cup,vinegar,white,10.0 cup,2365.8823649999995 milliliter,,
-20.0,tbsp,salt,,20.0 tablespoon,295.73529562499994 milliliter,,
-20.0,tbsp,sugar,,20.0 tablespoon,295.73529562499994 milliliter,280.0 gram,
-13.333333333333332,cup,water,,13.333333333333332 cup,3154.509819999999 milliliter,3154.509819999999 gram,
-,,,,,,,
-20.0,cup,soy curl,,20.0 cup,4731.764729999999 milliliter,800.0000000000001 gram,
-20.0,tsp,water from soy curls,,20.0 teaspoon,98.57843187499996 milliliter,,
-40.0,tsp,bouillon paste,,40.0 teaspoon,197.15686374999993 milliliter,,
-20.0,tsp,apple cider vinegar,,20.0 teaspoon,98.57843187499996 milliliter,120.26568688749995 gram,
-20.0,tsp,salt,,20.0 teaspoon,98.57843187499996 milliliter,,
-20.0,tsp,garlic powder,,20.0 teaspoon,98.57843187499996 milliliter,53.33333333333333 gram,
-20.0,tsp,onion powder,,20.0 teaspoon,98.57843187499996 milliliter,63.333333333333336 gram,
-20.0,tsp,cumin,,20.0 teaspoon,98.57843187499996 milliliter,49.99999999999999 gram,
-20.0,tsp,oregano,,20.0 teaspoon,98.57843187499996 milliliter,19.999999999999996 gram,
-10.0,tsp,turmeric,,10.0 teaspoon,49.28921593749998 milliliter,30.0 gram,
-10.0,tsp,pepper,,10.0 teaspoon,49.28921593749998 milliliter,23.333333333333332 gram,
-20.0,tbsp,vegetable oil,,20.0 tablespoon,295.73529562499994 milliliter,,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+20.0,piece,red onion,thinly sliced,,,
+10.0,cup,vinegar,white,10.0 cup,2365.8823649999995 milliliter,2271.2470703999993 gram
+20.0,tbsp,salt,,20.0 tablespoon,295.73529562499994 milliliter,
+20.0,tbsp,sugar,,20.0 tablespoon,295.73529562499994 milliliter,280.0 gram
+13.333333333333332,cup,water,,13.333333333333332 cup,3154.509819999999 milliliter,3154.509819999999 gram
+,,,,,,
+20.0,cup,soy curl,,20.0 cup,4731.764729999999 milliliter,800.0000000000001 gram
+20.0,tsp,water from soy curls,,20.0 teaspoon,98.57843187499996 milliliter,
+40.0,tsp,bouillon paste,,40.0 teaspoon,197.15686374999993 milliliter,
+20.0,tsp,apple cider vinegar,,20.0 teaspoon,98.57843187499996 milliliter,120.26568688749995 gram
+20.0,tsp,salt,,20.0 teaspoon,98.57843187499996 milliliter,
+20.0,tsp,garlic powder,,20.0 teaspoon,98.57843187499996 milliliter,53.33333333333333 gram
+20.0,tsp,onion powder,,20.0 teaspoon,98.57843187499996 milliliter,63.333333333333336 gram
+20.0,tsp,cumin,,20.0 teaspoon,98.57843187499996 milliliter,49.99999999999999 gram
+20.0,tsp,oregano,,20.0 teaspoon,98.57843187499996 milliliter,19.999999999999996 gram
+10.0,tsp,turmeric,,10.0 teaspoon,49.28921593749998 milliliter,30.0 gram
+10.0,tsp,pepper,,10.0 teaspoon,49.28921593749998 milliliter,23.333333333333332 gram
+20.0,tbsp,vegetable oil,,20.0 tablespoon,295.73529562499994 milliliter,

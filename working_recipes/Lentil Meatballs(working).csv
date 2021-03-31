@@ -1,15 +1,15 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-2000.0,gram,mushroom,finely chopped,2000.0 gram,,2000.0 gram,
-600.0,gram,kale,finely chopped,600.0 gram,,600.0 gram,
-1100.0,gram,onion,finely chopped,1100.0 gram,,1100.0 gram,
-20.0,clove,garlic,finely chopped,,,,
-,,,,,,,
-15.0,cup,lentil,pre-cooked weight/volume,15.0 cup,3548.823547499999 milliliter,3181.818181818182 gram,
-1050.0,gram,oatmeal,,1050.0 gram,,1050.0 gram,
-560.0,gram,almond flour,,560.0 gram,,560.0 gram,
-360.0,gram,sunflower seed,,360.0 gram,645.2406449999999 milliliter,360.0 gram,
-,,,,,,,
-40.0,tsp,oregano,,40.0 teaspoon,197.15686374999993 milliliter,39.99999999999999 gram,
-20.0,tsp,smoked paprika,,20.0 teaspoon,98.57843187499996 milliliter,53.33333333333333 gram,
-10.0,tsp,saly,,10.0 teaspoon,49.28921593749998 milliliter,,
-5.0,tsp,salt,,5.0 teaspoon,24.64460796874999 milliliter,,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+2000.0,gram,mushroom,finely chopped,2000.0 gram,,2000.0 gram
+600.0,gram,kale,finely chopped,600.0 gram,,600.0 gram
+1100.0,gram,onion,finely chopped,1100.0 gram,,1100.0 gram
+20.0,clove,garlic,finely chopped,,,
+,,,,,,
+15.0,cup,lentil,pre-cooked weight/volume,15.0 cup,3548.823547499999 milliliter,3181.818181818182 gram
+1050.0,gram,oatmeal,,1050.0 gram,,1050.0 gram
+560.0,gram,almond flour,,560.0 gram,,560.0 gram
+360.0,gram,sunflower seed,,360.0 gram,645.2406449999999 milliliter,360.0 gram
+,,,,,,
+40.0,tsp,oregano,,40.0 teaspoon,197.15686374999993 milliliter,39.99999999999999 gram
+20.0,tsp,smoked paprika,,20.0 teaspoon,98.57843187499996 milliliter,53.33333333333333 gram
+10.0,tsp,saly,,10.0 teaspoon,49.28921593749998 milliliter,
+5.0,tsp,salt,,5.0 teaspoon,24.64460796874999 milliliter,

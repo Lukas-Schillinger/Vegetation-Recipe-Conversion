@@ -1,7 +1,7 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-452.825,gram,cashew,,452.825 gram,697.9352976749999 milliliter,452.825 gram,
-2855.75,gram,yogurt,,2855.75 gram,2757.701454632142 milliliter,2855.75 gram,
-23.75,clove,garlic,,,,,
-4.425,tbsp,salt,,4.425 tablespoon,65.43143415703123 milliliter,,
-1338.25,gram,cucumber,,1338.25 gram,,1338.25 gram,
-11.75,tbsp,dill,chopped,11.75 tablespoon,173.74448617968744 milliliter,,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+452.825,gram,cashew,,452.825 gram,697.9352976749999 milliliter,452.825 gram
+2855.75,gram,yogurt,,2855.75 gram,2757.701454632142 milliliter,2855.75 gram
+23.75,clove,garlic,,,,
+4.425,tbsp,salt,,4.425 tablespoon,65.43143415703123 milliliter,
+1338.25,gram,cucumber,,1338.25 gram,,1338.25 gram
+11.75,tbsp,dill,chopped,11.75 tablespoon,173.74448617968744 milliliter,

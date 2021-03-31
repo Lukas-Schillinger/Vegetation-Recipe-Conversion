@@ -1,9 +1,9 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-5.0,cup,cilantro,,5.0 cup,1182.9411824999997 milliliter,199.99999999999997 gram,
-5.0,cup,parsley,,5.0 cup,1182.9411824999997 milliliter,,
-2.5,cup,tahini,,2.5 cup,591.4705912499999 milliliter,560.0 gram,
-20.0,tbsp,lemon juice,,20.0 tablespoon,295.73529562499994 milliliter,304.60735449374994 gram,
-5.0,tsp,garlic,minced,5.0 teaspoon,24.64460796874999 milliliter,,
-2.5,tsp,cumin,,2.5 teaspoon,12.322303984374996 milliliter,6.249999999999999 gram,
-2.5,tsp,salt,,2.5 teaspoon,12.322303984374996 milliliter,,
-2.5,tsp,pepper,,2.5 teaspoon,12.322303984374996 milliliter,5.833333333333333 gram,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+5.0,cup,cilantro,,5.0 cup,1182.9411824999997 milliliter,199.99999999999997 gram
+5.0,cup,parsley,,5.0 cup,1182.9411824999997 milliliter,
+2.5,cup,tahini,,2.5 cup,591.4705912499999 milliliter,560.0 gram
+20.0,tbsp,lemon juice,,20.0 tablespoon,295.73529562499994 milliliter,304.60735449374994 gram
+5.0,tsp,garlic,minced,5.0 teaspoon,24.64460796874999 milliliter,
+2.5,tsp,cumin,,2.5 teaspoon,12.322303984374996 milliliter,6.249999999999999 gram
+2.5,tsp,salt,,2.5 teaspoon,12.322303984374996 milliliter,
+2.5,tsp,pepper,,2.5 teaspoon,12.322303984374996 milliliter,5.833333333333333 gram

@@ -1,15 +1,15 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-4.5,cup,chopped onion,,4.5 cup,1064.6470642499996 milliliter,,
-6.0,piece,celery,chopped,,,306.1748497500001 gram,
-4.5,piece,carrot,chopped,,,,
-3.0,tsp,salt,,3.0 teaspoon,14.786764781249996 milliliter,,
-3.0,tsp,dried thyme,,3.0 teaspoon,14.786764781249996 milliliter,2.9999999999999996 gram,
-0.75,tsp,red pepper flake,,0.75 teaspoon,3.696691195312499 milliliter,1.75 gram,
-12.0,clove,garlic,chopped,,,,
-12.0,cup,vegetable broth,,12.0 cup,2839.058837999999 milliliter,2303.9999999999995 gram,
-10.5,piece,potato,diced,,,,
-42.0,ounce,crushed tomato,canned,42.0 ounce,,1190.67997125 gram,
-3.0,can,kidney bean,15oz can,,,,
-3.0,can,cannelini bean,15oz can,,,,
-0.75,cup,basil,chopped,0.75 cup,177.44117737499994 milliliter,24.000000000000004 gram,
-3.0,bunch,kale,chopped,,,,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+4.800000000000001,cup,chopped onion,,4.800000000000001 cup,1135.6235351999999 milliliter,
+6.4,piece,celery,chopped,,,326.5865064000001 gram
+4.800000000000001,piece,carrot,chopped,,,
+3.2,tsp,salt,,3.2 teaspoon,15.772549099999996 milliliter,
+3.2,tsp,dried thyme,,3.2 teaspoon,15.772549099999996 milliliter,3.1999999999999997 gram
+0.8,tsp,red pepper flake,,0.8 teaspoon,3.943137274999999 milliliter,1.866666666666667 gram
+12.8,clove,garlic,chopped,,,
+12.8,cup,vegetable broth,,12.8 cup,3028.3294271999994 milliliter,2457.6 gram
+11.200000000000001,piece,potato,diced,,,
+44.800000000000004,ounce,crushed tomato,canned,44.800000000000004 ounce,,1270.0586360000004 gram
+3.2,can,kidney bean,15oz can,,,
+3.2,can,cannelini bean,15oz can,,,
+0.8,cup,basil,chopped,0.8 cup,189.27058919999996 milliliter,25.6 gram
+3.2,bunch,kale,chopped,,,

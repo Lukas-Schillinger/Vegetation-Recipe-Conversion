@@ -1,11 +1,11 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-900.0,gram,carrot,matchsticked,900.0 gram,,900.0 gram,
-1200.0,gram,cucumber,matchsticked,1200.0 gram,,1200.0 gram,
-900.0,gram,bean sprout,,900.0 gram,,900.0 gram,
-,,mint,,,,,
-,,thai basil,,,,,
-2100.0,gram,sriracha tofu,7 blocks made 2855g,2100.0 gram,,2100.0 gram,
-600.0,gram,cabbage,food processed,600.0 gram,,600.0 gram,
-2400.0,gram,jasmine rice,,2400.0 gram,,2400.0 gram,
-30.0,piece,collard green tortilla,,,,,
-60.0,4oz,peanut sauce,,240.0 ounce,,6803.885550000001 gram,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+900.0,gram,carrot,matchsticked,900.0 gram,,900.0 gram
+1200.0,gram,cucumber,matchsticked,1200.0 gram,,1200.0 gram
+900.0,gram,bean sprout,,900.0 gram,,900.0 gram
+,,mint,,,,
+,,thai basil,,,,
+2100.0,gram,sriracha tofu,7 blocks made 2855g,2100.0 gram,,2100.0 gram
+600.0,gram,cabbage,food processed,600.0 gram,,600.0 gram
+2400.0,gram,jasmine rice,,2400.0 gram,,2400.0 gram
+30.0,piece,collard green tortilla,,,,
+60.0,4oz,peanut sauce,,240.0 ounce,,6803.885550000001 gram

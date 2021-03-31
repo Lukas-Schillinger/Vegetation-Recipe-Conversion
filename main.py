@@ -24,13 +24,13 @@ def find_working_folder():
 	possible_paths = []
 	possible_paths.append(Path(__file__).parent.absolute())
 
-	drop_path = (f'{str(Path.home())}\Dropbox')
+	drop_path = (f'{str(Path.home())}\\Dropbox')
 	if os.path.isdir(drop_path): possible_paths.append(drop_path)
 
 	for i in range(len(possible_paths)): print (f'[{i}] {possible_paths[i]}')
 
 	print ('select path')
-	selection = possible_paths[1]
+	selection = possible_paths[1] #                                   TEST CHECK
 	while test_mode == False:
 		selection = input('>>>')
 		try:
@@ -54,18 +54,11 @@ def choose_week(dir):
 
 	week_folder = os.listdir(f'{dir}\master_recipes')
 
-	count = 0
-	numbered_weeks = []
-
-	for i in range(len(week_folder)):
-		numbered_week = f'[{i}] {week_folder[i]}'
-		numbered_weeks.append(numbered_week)
-
-	print (*numbered_weeks, sep = '\n')
+	for i in range(len(week_folder)): print (f'[{i}] {week_folder[i]}')
 
 	print ('input number week')
-	week_selection = week_folder[0] #                         TEST CHECK
-	while test_mode == False: #                               TEST CHECK
+	week_selection = week_folder[0] #                                 TEST CHECK
+	while test_mode == False: #                                       TEST CHECK
 		try:
 			week_selection = week_folder[int(input('>'))]
 			break
@@ -84,9 +77,9 @@ def choose_all_or_one(metadata_dict):
 	print ('press [a] to normalize all recipes')
 	print ('press [o] to normalize one recipe')
 
-	all_or_one_selection = 'a' #                              TEST CHECK
+	all_or_one_selection = 'a' #                                      TEST CHECK
 
-	while test_mode == False: #                               TEST CHECK
+	while test_mode == False: #                                       TEST CHECK
 		try:
 			all_or_one_selection = str(input('>'))
 			selections = ('a', 'o')
@@ -98,20 +91,17 @@ def choose_all_or_one(metadata_dict):
 			print (e, '\n')
 
 	if all_or_one_selection == 'a':
-		return metadata_dict
+		pass
 
 	if all_or_one_selection == 'o':
-		count = 0
-		listed_recipes = []
+		recipes = []
 		for recipe in metadata_dict:
-			print (f'[{count}] {recipe}')
-			listed_recipes.append(recipe)
-			count += 1
+			recipes.append(recipe)
 
-		print ('choose recipe to normalize')
+		for i in range(len(recipes)): print (f'[{i}] {recipes[i]}')
 		while True:
 			try:
-				recipe_selection = listed_recipes[int(input('>'))]
+				recipe_selection = recipes[int(input('>'))]
 				break
 			except (IndexError, ValueError) as e:
 				print (e)
@@ -127,10 +117,7 @@ def choose_all_or_one(metadata_dict):
 				metadata_dict[recipe_selection]
 		}
 
-		return recipe_selection_dict
-
-	else:
-		print ('ERROR ERROR ERROR YOU SHOULDNT SEE THIS')
+	return recipe_selection_dict
 
 def get_metadata_dicts(dir):
 
@@ -398,11 +385,11 @@ def set_recipe_to_servings(df, recipe_dict):
 
 	print (name, '\nHow many servings?')
 
-	if test_mode == True: #                                   TEST CHECK
+	if test_mode == True: #                                           TEST CHECK
 		desired_servings = 40
 		recipe_dict['desired_servings'] = desired_servings
 
-	while test_mode == False: #                               TEST CHECK
+	while test_mode == False: #                                       TEST CHECK
 		try:
 			desired_servings = float(input('>'))
 			recipe_dict['desired_servings'] = desired_servings
@@ -441,23 +428,39 @@ def get_recipe_df(filepath):
 def fix_units(df):
 	df['raw_unit'] = df['raw_unit'].replace('tbs', 'tbsp')
 
-def find_missing_densities(df, missing_den):
+def find_missing_densities(df, missing_densities):
 
-	# the main priority for densities is getting a mass
-
-	# volume is only derived from density in case price
-	# requires a volume measurement
+	# mass is prioritized for now. We don't need volume
+	# unless it's needed for a price calculation
 
 	x = df.loc[
 			(pd.isnull(df['pint_mass'])) &
 			(pd.notnull(df['pint_volume']))
 		]
 
-	x = x['ingredient']
+	x = x['ingredient'].drop_duplicates()
+	x_list = x.tolist()
 
-	y = pd.concat([missing_den, x]).drop_duplicates()
+	for ingredient in x_list:
+		if ingredient in missing_densities:
+			pass
+		else:
+			missing_densities.append(ingredient)
 
-	return y
+def find_missing_prices(df, missing_prices):
+	x = df.loc[
+			(pd.isnull(df['price'])) &
+			(pd.notnull(df['ingredient']))
+		]
+
+	x = x['ingredient'].drop_duplicates()
+	x_list = x.tolist()
+
+	for ingredient in x_list:
+		if ingredient in missing_prices:
+			pass
+		else:
+			missing_prices.append(ingredient)
 
 def little_units(number):
 	# called by make_printable() if the ideal number to print is in volume
@@ -684,8 +687,9 @@ def main():
 	create_normalized_directory(metadata_week['week'], dir)
 
 	# empty frames to collect missing info
-	missing_den = pd.DataFrame()
-	missing_prices = pd.DataFrame()
+	#missing_den = pd.DataFrame()
+	missing_densities = []
+	missing_prices = []
 
 	# recipes filepaths to print
 	to_print = []
@@ -708,13 +712,15 @@ def main():
 
 		check_weird_unit(df)
 
-		missing_den = find_missing_densities(df, missing_den)
+		find_missing_densities(df, missing_densities)
 
 		convert_to_metric(df)
 
 		write_working_csv(df, metadata_dict[recipe])
 
 		get_prices(df, metadata_dict[recipe])
+
+		find_missing_prices(df, missing_prices)
 
 		round_everything(df)
 
@@ -726,7 +732,8 @@ def main():
 
 		to_print.append(metadata_dict[recipe]['norm_filepath'])
 
-	print (f'Missing Densities: \n{missing_den}')
+	print (f'Missing Densities: \n{missing_densities}')
+	print (f'Missing Prices: \n{missing_prices}')
 
 	if win_system:
 		normalize_and_print.main(to_print, dir, print_ex = False)

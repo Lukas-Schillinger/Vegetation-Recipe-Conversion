@@ -1,10 +1,10 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-327.11111111111114,gram,brown sugar,,327.11111111111114 gram,,327.11111111111114 gram,
-206.22222222222223,gram,coconut oil,,206.22222222222223 gram,217.8113923333333 milliliter,206.22222222222223 gram,
-115.55555555555556,gram,milk,,115.55555555555556 gram,,115.55555555555556 gram,
-23.11111111111111,gram,vanilla extract,,23.11111111111111 gram,22.882288228822883 milliliter,23.11111111111111 gram,
-426.6666666666667,gram,flour,,426.6666666666667 gram,,426.6666666666667 gram,
-8.88888888888889,gram,baking soda,,8.88888888888889 gram,9.127632581018517 milliliter,8.88888888888889 gram,
-7.111111111111112,gram,baking powder,,7.111111111111112 gram,7.302106064814813 milliliter,7.111111111111112 gram,
-3.555555555555556,gram,salt,,3.555555555555556 gram,,3.555555555555556 gram,
-284.44444444444446,gram,chocolate chip,,284.44444444444446 gram,,284.44444444444446 gram,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+3680.0,gram,brown sugar,,3680.0 gram,,3680.0 gram
+2320.0,gram,coconut oil,,2320.0 gram,2450.378163749999 milliliter,2320.0 gram
+1300.0,gram,milk,,1300.0 gram,,1300.0 gram
+260.0,gram,vanilla extract,,260.0 gram,257.4257425742574 milliliter,260.0 gram
+4800.0,gram,flour,,4800.0 gram,,4800.0 gram
+100.0,gram,baking soda,,100.0 gram,102.6858665364583 milliliter,100.0 gram
+80.0,gram,baking powder,,80.0 gram,82.14869322916664 milliliter,80.0 gram
+40.0,gram,salt,,40.0 gram,,40.0 gram
+3200.0,gram,chocolate chip,,3200.0 gram,,3200.0 gram

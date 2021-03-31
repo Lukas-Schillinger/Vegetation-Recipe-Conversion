@@ -1,9 +1,9 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-3.1666666666666665,cup,tahini,,3.1666666666666665 cup,749.1960822499998 milliliter,709.3333333333333 gram,
-2.375,cup,water,,2.375 cup,561.8970616874999 milliliter,561.8970616874999 gram,
-38.0,tbsp,lemon juice,,38.0 tablespoon,561.8970616874999 milliliter,578.7539735381249 gram,
-19.0,clove,garlic,minced,,,,
-3.1666666666666665,tsp,onion powder,,3.1666666666666665 teaspoon,15.60825171354166 milliliter,10.027777777777777 gram,
-4.75,tsp,salt,,4.75 teaspoon,23.412377570312493 milliliter,,
-,,black pepper,,,,,
-3.1666666666666665,tbsp,maple syrup,,3.1666666666666665 tablespoon,46.82475514062499 milliliter,64.14991454265623 gram,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+2.6666666666666665,cup,tahini,,2.6666666666666665 cup,630.9019639999998 milliliter,597.3333333333334 gram
+2.0,cup,water,,2.0 cup,473.1764729999999 milliliter,473.1764729999999 gram
+32.0,tbsp,lemon juice,,32.0 tablespoon,473.1764729999999 milliliter,487.3717671899999 gram
+16.0,clove,garlic,minced,,,
+2.6666666666666665,tsp,onion powder,,2.6666666666666665 teaspoon,13.143790916666662 milliliter,8.444444444444445 gram
+4.0,tsp,salt,,4.0 teaspoon,19.715686374999994 milliliter,
+,,black pepper,,,,
+2.6666666666666665,tbsp,maple syrup,,2.6666666666666665 tablespoon,39.43137274999999 milliliter,54.020980667499984 gram

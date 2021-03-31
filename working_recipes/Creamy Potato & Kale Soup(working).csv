@@ -1,19 +1,19 @@
-number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass,price
-2000.0,gram,onion,diced,2000.0 gram,,2000.0 gram,
-1000.0,gram,celery,diced,1000.0 gram,,1000.0 gram,
-,,,,,,,
-35.0,clove,garlic,,,,,
-5.0,tsp,salt,,5.0 teaspoon,24.64460796874999 milliliter,,
-2.5,tsp,pepper,,2.5 teaspoon,12.322303984374996 milliliter,5.833333333333333 gram,
-5.0,tsp,thyme,,5.0 teaspoon,24.64460796874999 milliliter,4.999999999999999 gram,
-2.5,tsp,dried marjoram,,2.5 teaspoon,12.322303984374996 milliliter,,
-2.5,tsp,dried rosemary,,2.5 teaspoon,12.322303984374996 milliliter,,
-,,,,,,,
-8000.0,gram,potato,"peeled, diced",8000.0 gram,,8000.0 gram,
-30.0,cup,vegetable broth,,30.0 cup,7097.647094999998 milliliter,5760.0 gram,
-10.0,tbsp,dried parsley,,10.0 tablespoon,147.86764781249997 milliliter,29.999999999999996 gram,
-5.0,cup,nutritional yeast,,5.0 cup,1182.9411824999997 milliliter,300.0 gram,
-500.0,gram,kale,confetti sliced,500.0 gram,,500.0 gram,
-700.0,gram,raw cashew,soaked,700.0 gram,,700.0 gram,
-5.0,cup,coconut milk,from a box,5.0 cup,1182.9411824999997 milliliter,1040.0 gram,
-2.5,tsp,red pepper flake,,2.5 teaspoon,12.322303984374996 milliliter,5.833333333333333 gram,
+number,raw_unit,ingredient,notes,pint_raw,pint_volume,pint_mass
+2000.0,gram,onion,diced,2000.0 gram,,2000.0 gram
+1000.0,gram,celery,diced,1000.0 gram,,1000.0 gram
+,,,,,,
+35.0,clove,garlic,,,,
+5.0,tsp,salt,,5.0 teaspoon,24.64460796874999 milliliter,
+2.5,tsp,pepper,,2.5 teaspoon,12.322303984374996 milliliter,5.833333333333333 gram
+5.0,tsp,thyme,,5.0 teaspoon,24.64460796874999 milliliter,4.999999999999999 gram
+2.5,tsp,dried marjoram,,2.5 teaspoon,12.322303984374996 milliliter,
+2.5,tsp,dried rosemary,,2.5 teaspoon,12.322303984374996 milliliter,
+,,,,,,
+8000.0,gram,potato,"peeled, diced",8000.0 gram,,8000.0 gram
+30.0,cup,vegetable broth,,30.0 cup,7097.647094999998 milliliter,5760.0 gram
+10.0,tbsp,dried parsley,,10.0 tablespoon,147.86764781249997 milliliter,29.999999999999996 gram
+5.0,cup,nutritional yeast,,5.0 cup,1182.9411824999997 milliliter,300.0 gram
+500.0,gram,kale,confetti sliced,500.0 gram,,500.0 gram
+700.0,gram,raw cashew,soaked,700.0 gram,,700.0 gram
+5.0,cup,coconut milk,from a box,5.0 cup,1182.9411824999997 milliliter,1040.0 gram
+2.5,tsp,red pepper flake,,2.5 teaspoon,12.322303984374996 milliliter,5.833333333333333 gram
