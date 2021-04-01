@@ -60,7 +60,7 @@ def choose_week(dir):
 	week_selection = week_folder[0] #                                 TEST CHECK
 	while test_mode == False: #                                       TEST CHECK
 		try:
-			week_selection = week_folder[int(input('>'))]
+			week_selection = week_folder[int(input('>>>'))]
 			break
 		except (IndexError, ValueError) as e:
 			print (e, '\n')
@@ -91,7 +91,7 @@ def choose_all_or_one(metadata_dict):
 			print (e, '\n')
 
 	if all_or_one_selection == 'a':
-		return metadata_dict
+		return_dict = metadata_dict
 
 	if all_or_one_selection == 'o':
 		recipes = []
@@ -106,7 +106,7 @@ def choose_all_or_one(metadata_dict):
 			except (IndexError, ValueError) as e:
 				print (e)
 
-		# I need to create a new dictionary object for a sinlge
+		# I need to create a new dictionary object for a single
 		# selection because recipes in the dict are accessed
 		# later on by their key. metadata_dict[recipe_selection]
 		# doesn't include the key so a new dictionary needs
@@ -117,7 +117,9 @@ def choose_all_or_one(metadata_dict):
 				metadata_dict[recipe_selection]
 		}
 
-		return recipe_selection_dict
+		return_dict = recipe_selection_dict
+
+	return return_dict
 
 def get_metadata_dicts(dir):
 
@@ -129,7 +131,7 @@ def get_metadata_dicts(dir):
 
 	recipe_paths = []
 	for recipe in recipe_file_names:
-		path = f'{chosen_week_path}\{recipe}'
+		path = f'{chosen_week_path}\\{recipe}'
 		recipe_paths.append(path)
 
 	# I'm using a dict here to pass information instead of directly
@@ -174,10 +176,10 @@ def get_metadata_dicts(dir):
 	return metadata_dict, metadata_week
 
 def create_normalized_directory(week_name, dir):
-	if os.path.isdir(f'{dir}\\normalized_recipes\{week_name}'):
+	if os.path.isdir(f'{dir}\\normalized_recipes\\{week_name}'):
 		pass
 	else:
-		os.makedirs(f'{dir}\\normalized_recipes\{week_name}')
+		os.makedirs(f'{dir}\\normalized_recipes\\{week_name}')
 
 def try_pint(df):
 
