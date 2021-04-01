@@ -91,7 +91,7 @@ def choose_all_or_one(metadata_dict):
 			print (e, '\n')
 
 	if all_or_one_selection == 'a':
-		pass
+		return metadata_dict
 
 	if all_or_one_selection == 'o':
 		recipes = []
@@ -117,7 +117,7 @@ def choose_all_or_one(metadata_dict):
 				metadata_dict[recipe_selection]
 		}
 
-	return recipe_selection_dict
+		return recipe_selection_dict
 
 def get_metadata_dicts(dir):
 
@@ -168,7 +168,7 @@ def get_metadata_dicts(dir):
 
 	metadata_dict = choose_all_or_one(metadata_dict)
 
-	# unused at the moment 
+	# unused at the moment
 	metadata_week = {'week' : week_name}
 
 	return metadata_dict, metadata_week
